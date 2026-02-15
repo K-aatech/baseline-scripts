@@ -1,0 +1,22 @@
+{
+    "include-v-in-tag": true,
+    "packages": {
+        ".": {
+            "release-type": "simple",
+            "package-name": "baseline-scripts",
+            "include-component-in-tag": false,
+            "draft": false,
+            "prerelease": false
+        }
+    },
+    "changelog-sections": [
+        { "type": "feat", "section": "✨ Features", "hidden": false },
+        { "type": "fix", "section": "🐛 Bug Fixes", "hidden": false },
+        { "type": "ci", "section": "⚙️ CI/CD & Infra", "hidden": false },
+        { "type": "docs", "section": "📚 Documentation", "hidden": false },
+        { "type": "chore", "section": "🧹 Maintenance", "hidden": false },
+        { "type": "refactor", "section": "♻️ Refactoring", "hidden": false },
+        { "type": "perf", "section": "⚡ Performance", "hidden": false },
+        { "type": "test", "section": "🧪 Tests", "hidden": false }
+    ]
+}
