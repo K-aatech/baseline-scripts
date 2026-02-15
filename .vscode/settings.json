@@ -1,0 +1,22 @@
+{
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "boundary",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "shellcheck.executablePath": "shellcheck",
+    "[markdown]": {
+        "editor.wordWrap": "on"
+    },
+    "conventionalCommits.scopes": [
+        "governance",
+        "ci",
+        "docs",
+        "security",
+        "deps",
+        "release",
+        "workflows",
+        "structure",
+        "tooling"
+    ]
+}
