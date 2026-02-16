@@ -55,7 +55,7 @@ La postura de seguridad busca mitigar estos riesgos estructuralmente.
 El repositorio aplica los siguientes límites de confianza:
 
 - Solo las *Pull Request* pueden modificar `main`.
-- Las etiquetas se generan exclusivamente mediante automatización.
+- Las etiquetas se generan exclusivamente mediante automatización aprobada.
 - Los *pipelines* de CI operan con privilegios mínimos.
 - Los colaboradores no controlan directamente el control de versiones de los lanzamientos.
 - Los cambios en la gobernanza requieren una revisión explícita.
@@ -81,6 +81,22 @@ La línea base depende de los siguientes controles:
 - Sin creación manual de etiquetas
 - Etiquetas de versión protegidas (`v*`)
 - Generación determinista de registros de cambios
+
+#### 5.2.1 Excepción Controlada de *Token* de Automatización
+
+En entornos donde la protección de etiquetas o políticas de repositorio impidan a `GITHUB_TOKEN` crear versiones, podrá utilizarse un *Personal Access Token (PAT)* dedicado exclusivamente a la automatización de versiones.
+
+Requisitos obligatorios:
+
+- Debe almacenarse como secreto del repositorio.
+- Debe tener permisos mínimos necesarios.
+- No debe reutilizarse para otras automatizaciones.
+- Debe estar asociado a una cuenta técnica o de servicio.
+- Su uso debe limitarse exclusivamente al flujo de liberación.
+
+El uso de un PAT no debe ampliar privilegios administrativos fuera del proceso de versionado automatizado.
+
+El uso indebido o expansión de privilegios constituye un incidente de seguridad.
 
 ### 5.3 Cumplimiento de CI
 
@@ -108,6 +124,8 @@ Las estrategias de mitigación incluyen:
 
 - Versiones de *Actions* fijadas
 - Permisos mínimos para flujos de trabajo
+  - Declaración explícita de permisos en cada flujo de trabajo (`permissions:`)
+  - Prohibición de uso implícito de permisos por defecto
 - Actualizaciones automatizadas de dependencias
 - Proceso controlado de revisión de actualizaciones
 
@@ -164,6 +182,15 @@ Los eventos de seguridad pueden incluir:
 - Exposición de secretos
 
 Cada evento debe evaluarse en función de su impacto en la integridad estructural y el determinismo de la versión.
+
+Los incidentes pueden clasificarse como:
+
+- **Críticos**: Comprometen la integridad de versiones o gobernanza.
+- **Altos**: Permiten evasión de controles automatizados.
+- **Moderados**: Debilitan controles sin afectar versiones existentes.
+- **Informativos**: No comprometen integridad estructural, pero requieren corrección.
+
+La severidad determina el nivel de respuesta y remediación requerida.
 
 
 ## 11. Responsabilidad Derivada del Repositorio
