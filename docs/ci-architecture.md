@@ -60,14 +60,36 @@ Responsable de:
 - Crear etiquetas `vX.Y.Z`.
 - Actualizar `CHANGELOG.md`.
 
-No se permite intervención manual.
+No se permite creación manual de etiquetas ni manipulación manual del número de versión.
+
+#### 3.2.1 Automatización de *Releases* y Uso de *Token* Dedicado
+
+Para garantizar que el *Pull Request* generado por la automatización:
+
+- Ejecute validación de *commits*.
+- Ejecute análisis estático.
+- Cumpla las mismas reglas de gobernanza que cualquier otro *Pull Request*.
+
+Podrá utilizarse un *Personal Access Token (PAT)* con alcance restringido para ejecutar el flujo de *release*.
+
+Esta decisión responde a restricciones de activación de workflows asociadas al `GITHUB_TOKEN`, que impiden su activación completa cuando el PR es generado por automatización.
+
+El *token* debe:
+
+- Cumplir las restricciones definidas en el [Modelo de Seguridad](./security-model.md).
+- Tener permisos mínimos necesarios.
+- Estar restringido exclusivamente al flujo de liberación.
+- Ser almacenado como secreto del repositorio.
+
+La arquitectura CI considera este *token* una excepción controlada, auditada y limitada al proceso de versionado automático.
+
 
 ### 3.3 Análisis Estático
 
 Debe incluir:
 
 - Ejecución de *ShellCheck*.
-- Validación contra la [Bash Style Guide](bash-style-guide.md)
+- Validación contra la [Bash Style Guide](./bash-style-guide.md)
 - Reporte estructurado de hallazgos.
 
 Cuando sea posible, los resultados deben publicarse en formato SARIF para integrarse con herramientas de seguridad de la plataforma.
@@ -80,6 +102,8 @@ La CI debe garantizar que:
 - No se debiliten reglas estructurales.
 - No se modifique la política de versionado sin declaración explícita.
 - No se introduzcan secretos.
+
+La validación estructural debe implementarse mediante *scripts* automatizados versionados dentro del repositorio.
 
 La eliminación de artefactos normativos constituye una falla crítica.
 
@@ -119,6 +143,8 @@ Debe ejecutarse:
 Los *workflows* deben:
 
 - Utilizar permisos mínimos necesarios.
+  - Declarar explícitamente el bloque `permissions:` en cada *workflow*.
+  - Prohibir el uso de permisos implícitos por defecto.
 - Evitar *tokens* con privilegios excesivos.
 - No exponer secretos en *logs*.
 - Usar versiones fijas o controladas de acciones externas.

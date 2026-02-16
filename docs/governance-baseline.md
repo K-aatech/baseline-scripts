@@ -29,15 +29,102 @@ Todos los repositorios derivados deben cumplir estas reglas salvo desviación do
 
 El repositorio debe contener como mínimo:
 - `.editorconfig`
-- Configuración de `commitlint`
-- Configuración de `release-please`
+- Configuración operativa de `commitlint`
+- Configuración operativa de `release-please`
 - Política de versionado (`docs/versioning.md`)
 - Guía de estilo (`docs/bash-style-guide.md`)
 - Plantillas oficiales (`docs/templates/`)
-- Configuración de dependencias automatizadas
+- Configuración de automatización de dependencias
 - Documentación de gobernanza
 
-La eliminación o modificación estructural de estos elementos constituye un cambio incompatible (MAJOR).
+### 2.1 Estructura de Directorios Estándar
+
+Además de los artefactos mínimos obligatorios, el repositorio adopta la siguiente estructura base:
+
+```bash
+.
+├── audit/
+├── hardening/
+├── maintenance/
+├── scripts/
+├── test/
+│   ├── unit/
+│   │   ├── example-test.sh        (ejecutable)
+│   │   └── another-test.sh        (ejecutable)
+│   └── lib/
+│       └── test-helpers.sh        (no ejecutable)
+├── lib/
+├── docs/
+│ ├── templates/
+│ └── *.md
+└── .github/workflows/
+```
+
+---
+
+#### Reglas:
+
+- `scripts/`  
+    Contiene únicamente *scripts* ejecutables distribuidos como artefacto principal del repositorio.
+
+- `lib/`  
+    Contiene módulos reutilizables que pueden ser importados (`source`) por *scripts* productivos o pruebas.  
+    No debe contener artefactos ejecutables distribuidos directamente al usuario final.
+
+- `test/`  
+    Contiene pruebas automatizadas.  
+    Puede incluir subdirectorios internos para utilidades (`helpers/`, `fixtures/`, etc.) siempre que no contengan artefactos productivos.
+
+- `docs/`  
+    Contiene documentación normativa y técnica.
+
+- `.github/workflows/`  
+    Contiene exclusivamente automatizaciones CI/CD.
+
+#### Reglas de ejecutabilidad:
+
+- Los archivos en `scripts/` deben ser ejecutables.
+- Los archivos en `test/unit/` deben ser ejecutables.
+- Ningún archivo dentro de `lib/` o `test/lib/` debe tener permiso de ejecución.
+
+La introducción de nuevas carpetas de primer nivel debe justificarse técnicamente.
+
+Los contenidos de `test/` no forman parte del artefacto distribuible del baseline.
+
+
+La modificación de la topología de primer nivel definida en esta sección constituye una ruptura del contrato estructural y requiere declaración explícita de `BREAKING CHANGE` conforme a SemVer.
+
+### 2.2 Automatización Local (No Contractual)
+
+El repositorio puede incluir un directorio `.githooks/` destinado a validaciones locales alineadas con las políticas de CI/CD.
+
+Su propósito es:
+- Reducir retroalimentación tardía
+- Detectar incumplimientos antes de abrir un *Pull Request*
+- Alinear comportamiento local con validaciones automatizadas
+
+El uso de *hooks* locales es recomendado, pero no obligatorio.
+
+La ausencia, modificación o eliminación del directorio `.githooks/` no constituye ruptura del contrato estructural del *baseline*.
+
+Las validaciones críticas deben ejecutarse obligatoriamente en CI.  
+Los *hooks* locales no sustituyen controles centralizados.
+
+### 2.3 Configuración de Entorno (Recomendada)
+
+El repositorio puede incluir configuraciones específicas de herramientas de desarrollo, tales como:
+
+- `.vscode/settings.json`
+- `.vscode/extensions.json`
+
+Estas configuraciones tienen como objetivo:
+- Mejorar la experiencia de desarrollo
+- Homogeneizar estándares locales
+- Reducir fricción operativa
+
+Dichos archivos son opcionales y no forman parte de la estructura mínima obligatoria.
+
+Su modificación o eliminación no constituye un cambio incompatible ni requiere incremento MAJOR.
 
 
 ## 3. Modelo de Desarrollo
@@ -87,7 +174,7 @@ Se considera ruptura del contrato estructural cuando:
 - Se altera el modelo de versionado
 - Se debilitan restricciones de gobernanza
 - Se introduce ambigüedad en reglas automáticas
-- Se modifica la estructura mínima sin declarar `BREAKING CHANGE`
+- Se altera la topología base de directorios de primer nivel definida en la sección 2.1 sin declaración de `BREAKING CHANGE`
 
 
 ## 7. Protección de Integridad

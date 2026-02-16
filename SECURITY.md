@@ -69,6 +69,8 @@ Los problemas se pueden clasificar como:
 - Alto: Compromiso del proceso de lanzamiento, omisión de la gobernanza o riesgo de integridad estructural.
 - Crítico: Exposición de credenciales, omisión de la ejecución o riesgo de toma de control del repositorio.
 
+La clasificación debe alinearse con el [Modelo de Seguridad](./docs/security-model.md) estructural del repositorio.
+
 La clasificación de gravedad determina la urgencia de la respuesta.
 
 
@@ -78,7 +80,7 @@ El proyecto sigue los principios de divulgación responsable:
 
 - No se realizará divulgación pública antes de la mitigación.
 - No se publicarán los detalles del *exploit* antes del lanzamiento del parche.
-- Borrar la entrada del registro de cambios una vez resuelta.
+- Actualizar el registro de cambios de forma transparente una vez resuelto.
 - Actualización de la versión siguiendo las reglas de *SemVer*.
 
 Los cambios importantes relacionados con la seguridad deben seguir las *Conventional Commits*.
@@ -114,7 +116,25 @@ Si se hace un *commit* de un secreto accidentalmente se debe:
 4. Documentar el incidente internamente.
 
 
-## 9. Protección de ramas y etiquetas
+## 9. Gestión de *Tokens* Automatizados
+
+El repositorio puede utilizar *tokens* de automatización para procesos de *release* u otras operaciones controladas de CI.
+
+Estos *tokens* deben:
+
+- Ser ***Fine-Grained*** cuando la plataforma lo permita.
+- Tener alcance mínimo necesario.
+- Tener expiración definida.
+- Ser rotados periódicamente.
+- No incluir permisos administrativos.
+- Estar restringidos a cuentas técnicas o de servicio.
+
+La configuración de dichos *tokens* forma parte del modelo de seguridad estructural del proyecto.
+
+El uso indebido, ampliación de privilegios o reutilización fuera del flujo autorizado constituye un incidente de seguridad.
+
+
+## 10. Protección de ramas y etiquetas
 
 La postura de seguridad requiere:
 
@@ -127,7 +147,7 @@ La postura de seguridad requiere:
 Deshabilitar estas protecciones constituye una infracción de gobernanza.
 
 
-## 10. Seguridad y Cambios Importantes
+## 11. Seguridad y Cambios Importantes
 
 Si una corrección de seguridad requiere una modificación estructural:
 
@@ -136,7 +156,7 @@ Si una corrección de seguridad requiere una modificación estructural:
 - No debe alterar las expectativas de gobernanza de forma silenciosa.
 
 
-## 11. Responsabilidad del Mantenedor
+## 12. Responsabilidad del Mantenedor
 
 Los mantenedores son responsables de:
 
@@ -148,7 +168,7 @@ Los mantenedores son responsables de:
 La seguridad es inseparable de la gobernanza.
 
 
-## 12. Descargo de responsabilidad
+## 13. Descargo de responsabilidad
 
 Este repositorio proporciona estándares estructurales y de gobernanza.
 
