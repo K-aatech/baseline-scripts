@@ -109,7 +109,18 @@ El uso indebido o expansión de privilegios constituye un incidente de seguridad
 
 - Sin credenciales incrustadas
 - Sin *tokens* de texto plano
-- Escaneo de secretos habilitado (si la plataforma lo permite)
+- Escaneo automatizado obligatorio de secretos
+
+El repositorio implementa escaneo automatizado mediante ***TruffleHog***:
+
+- Las *Pull Request* se escanean contra el diferencial respecto a `main`.
+- Los escaneos programados analizan el historial completo.
+- La detección de un secreto provoca fallo inmediato del flujo de CI.
+- Los resultados se publican en formato SARIF para trazabilidad estructural.
+
+El control es determinista, portable y no depende de licenciamiento externo.
+
+La desactivación de este mecanismo constituye un evento de seguridad.
 
 
 ## 6. Consideraciones sobre la Cadena de Suministro
@@ -204,7 +215,23 @@ Los repositorios derivados de esta línea base deben:
 Cualquier desviación del modelo de seguridad de la línea base debe documentarse explícitamente.
 
 
-## 12. Evolución del Modelo
+## 12. Decisiones de Herramientas de Seguridad
+
+Se evaluó *Gitleaks* como herramienta de escaneo de secretos.
+
+La versión reciente introduce requisitos de licencia para uso organizacional, lo cual genera dependencia externa y reduce la portabilidad del *baseline*.
+
+Se adopta *TruffleHog* como alternativa:
+
+- Sin requisito de licencia.
+- Ejecución mediante binario versionado.
+- Validación de integridad mediante checksum.
+- Compatible con generación de reportes SARIF.
+
+Las decisiones de herramientas deben preservar la independencia, portabilidad y determinismo del modelo de seguridad.
+
+
+## 13. Evolución del Modelo
 
 Este modelo de seguridad evoluciona con la línea base.
 
