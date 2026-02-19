@@ -115,6 +115,17 @@ Si se hace un *commit* de un secreto accidentalmente se debe:
 3. Abrir una *Pull Request* para su corrección.
 4. Documentar el incidente internamente.
 
+### 8.1 Escaneo Automatizado de Secretos
+
+El repositorio aplica escaneo automatizado de secretos como control estructural obligatorio.
+
+- Las *Pull Request* fallarán si se detecta un secreto.
+- Se realizan escaneos programados completos del historial.
+- Los resultados se publican como reportes SARIF.
+- El permiso `security-events: write` se limita exclusivamente a la carga de dichos reportes.
+
+Deshabilitar o debilitar este control constituye una infracción de gobernanza.
+
 
 ## 9. Gestión de *Tokens* Automatizados
 
