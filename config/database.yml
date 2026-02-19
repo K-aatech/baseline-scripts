@@ -1,0 +1,5 @@
+development:
+  # Connection string con usuario y password expuestos
+  url: "postgresql://db_admin:P4ssw0rd_Very_Secret_2026@db.example.com:5432/production_db"
+  # MongoDB también es detectado frecuentemente
+  backup_url: "mongodb+srv://root:root_password@cluster0.mongodb.net/test"
