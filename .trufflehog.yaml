@@ -1,0 +1,9 @@
+# Configuración de exclusiones para TruffleHog OSS
+exclude_paths:
+  - "**/test/data/**"
+  - "docs/examples/**"
+  - "config/aws-credentials.example" # Excluimos nuestro archivo de prueba
+
+# También puedes excluir detectores específicos si generan mucho ruido
+# exclude_detectors:
+#   - URI
