@@ -1,2 +1,3 @@
 # Security validation test – simulated secret
 GITHUB_TOKEN=ghp_abcdefghijklmnopqrstuvwxyz1234567890abcd
+SECURITY_PAT=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
