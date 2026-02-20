@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: trufflehog
+        name: TruffleHog Scan
+        # We use file://. to ensure it's a valid URI on Windows and Linux.
+        entry: trufflehog git file://. --since-commit HEAD --results=verified,unverified,unknown --fail
+        language: system
+        pass_filenames: false

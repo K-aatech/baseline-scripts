@@ -107,20 +107,24 @@ El uso indebido o expansión de privilegios constituye un incidente de seguridad
 
 ### 5.4 Prevención de Secretos
 
-- Sin credenciales incrustadas
-- Sin *tokens* de texto plano
-- Escaneo automatizado obligatorio de secretos
+El repositorio prohíbe la persistencia de credenciales, *tokens* o llaves en el historial. Se implementa una estrategia de **Defensa en Profundidad** mediante el escaneo automatizado en dos niveles:
 
-El repositorio implementa escaneo automatizado mediante ***TruffleHog***:
+#### 5.4.1 Escudo Proactivo (Local / *Pre-commit*)
+Como primera línea de defensa, es obligatorio el uso del *framework* `pre-commit` vinculado a **TruffleHog**.
+- **Intercepción**: El escaneo ocurre en la máquina del desarrollador antes de que el *commit* sea creado.
+- **Alineación**: Utiliza la misma versión del motor y reglas que la CI para garantizar paridad de resultados.
+- **Bloqueo**: Impide la creación del *commit* si se detectan hallazgos *verified*, *unverified* o de alta entropía.
 
-- Las *Pull Request* se escanean contra el diferencial respecto a `main`.
-- Los escaneos programados analizan el historial completo.
-- La detección de un secreto provoca fallo inmediato del flujo de CI.
-- Los resultados se publican en formato SARIF para trazabilidad estructural.
+#### 5.4.2 Escudo Reactivo y Trazabilidad (CI / SARIF)
+Como red de seguridad final, el flujo de trabajo en *GitHub Actions* ejecuta un escaneo exhaustivo:
+- **Diferencial**: Las *Pull Request* se escanean contra el diferencial respecto a `main`.
+- **Histórico**: Los escaneos programados analizan el historial completo del repositorio.
+- **Trazabilidad**: Los resultados se publican en formato SARIF, permitiendo que las alertas se gestionen directamente en la pestaña de *Security* de *GitHub*.
 
-El control es determinista, portable y no depende de licenciamiento externo.
+La desactivación de estos mecanismos o el uso de `--no-verify` sin justificación constituye un evento de seguridad crítico.
 
-La desactivación de este mecanismo constituye un evento de seguridad.
+#### 5.4.3 Gestión de Falsos Positivos
+Las excepciones legítimas se gestionan centralizadamente mediante el archivo `.trufflehog.yaml`. Cualquier adición a este archivo requiere revisión por parte de los *Code Owners*.
 
 
 ## 6. Consideraciones sobre la Cadena de Suministro
@@ -129,7 +133,7 @@ Los riesgos de seguridad pueden provenir de:
 
 - Dependencias externas
 - Flujos de trabajo de *GitHub Actions*
-- Automatización de herramientas de terceros 
+- Automatización de herramientas de terceros
 
 Las estrategias de mitigación incluyen:
 
@@ -217,16 +221,13 @@ Cualquier desviación del modelo de seguridad de la línea base debe documentars
 
 ## 12. Decisiones de Herramientas de Seguridad
 
-Se evaluó *Gitleaks* como herramienta de escaneo de secretos.
+Se evaluó *Gitleaks* como herramienta de escaneo de secretos. La versión reciente introduce requisitos de licencia para uso organizacional, lo cual genera dependencia externa y reduce la portabilidad del *baseline*.
 
-La versión reciente introduce requisitos de licencia para uso organizacional, lo cual genera dependencia externa y reduce la portabilidad del *baseline*.
-
-Se adopta *TruffleHog* como alternativa:
-
-- Sin requisito de licencia.
-- Ejecución mediante binario versionado.
-- Validación de integridad mediante checksum.
-- Compatible con generación de reportes SARIF.
+Se adopta **TruffleHog** como estándar inmutable:
+- **Independencia**: Sin requisito de licencia comercial para el motor OSS.
+- **Determinismo**: Ejecución mediante binario específico versionado por SHA256.
+- **Integridad**: Validación de *checksum* en tiempo de ejecución de CI.
+- **Omnicanalidad**: El mismo binario protege el entorno local (*Windows*/*Linux*) y la nube (*GitHub Actions*).
 
 Las decisiones de herramientas deben preservar la independencia, portabilidad y determinismo del modelo de seguridad.
 

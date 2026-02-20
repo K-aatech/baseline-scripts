@@ -3,6 +3,8 @@
         "timonwong.shellcheck",
         "editorconfig.editorconfig",
         "yzhang.markdown-all-in-one",
-        "vivaxy.vscode-conventional-commits"
+        "vivaxy.vscode-conventional-commits",
+        "github.vscode-github-actions",
+        "redhat.vscode-yaml"
     ]
 }

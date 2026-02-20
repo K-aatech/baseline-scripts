@@ -4,7 +4,6 @@ Este repositorio define la base estructural y de gobernanza para proyectos de au
 
 La seguridad se considera una preocupación fundamental.
 
-
 ## 1. Alcance
 
 Esta política se aplica a:
@@ -22,15 +21,13 @@ Los repositorios derivados deben definir sus propias políticas de seguridad, in
 
 Si descubre una vulnerabilidad de seguridad, no abra un informe público.
 
-En su lugar:
+Este repositorio utiliza ***GitHub Private Vulnerability Reporting***. Para reportar un problema:
 
-1. Reporte el problema de forma privada a los responsables del repositorio.
-2. Proporcione una descripción clara y reproducible.
-3. Incluya una evaluación de impacto si se conoce.
-4. Sugiera una solución si es posible.
+1. Diríjase a la pestaña ***Security*** del repositorio.
+2. Seleccione ***Advisories*** en la barra lateral izquierda.
+3. Haga clic en ***Report a vulnerability*** para enviar los detalles de forma privada a los mantenedores.
 
 Los detalles confidenciales no deben divulgarse públicamente hasta que se disponga de una mitigación.
-
 
 ## 3. Tipos de Problemas de Seguridad
 
@@ -45,7 +42,6 @@ Los problemas de seguridad pueden incluir:
 
 Las inconsistencias en la documentación que podrían debilitar la gobernanza también pueden considerarse problemas de seguridad.
 
-
 ## 4. Proceso de Gestión
 
 Al recibir un informe:
@@ -58,7 +54,6 @@ Al recibir un informe:
 6. La divulgación se realizará después de la mitigación.
 
 El plazo depende de la gravedad y la complejidad.
-
 
 ## 5. Clasificación de Gravedad
 
@@ -73,7 +68,6 @@ La clasificación debe alinearse con el [Modelo de Seguridad](./docs/security-mo
 
 La clasificación de gravedad determina la urgencia de la respuesta.
 
-
 ## 6. Divulgación Coordinada
 
 El proyecto sigue los principios de divulgación responsable:
@@ -85,7 +79,6 @@ El proyecto sigue los principios de divulgación responsable:
 
 Los cambios importantes relacionados con la seguridad deben seguir las *Conventional Commits*.
 
-
 ## 7. Seguridad de Dependencias
 
 El repositorio puede depender de actualizaciones automatizadas de dependencias.
@@ -95,9 +88,8 @@ Las actualizaciones de seguridad deben:
 - Priorizarse.
 - No debilitar las reglas de gobernanza.
 - Validarse mediante CI antes de la fusión.
- 
-Las actualizaciones de dependencias no deben introducir cambios estructurales importantes sin declaración.
 
+Las actualizaciones de dependencias no deben introducir cambios estructurales importantes sin declaración.
 
 ## 8. Secretos y Credenciales
 
@@ -117,15 +109,12 @@ Si se hace un *commit* de un secreto accidentalmente se debe:
 
 ### 8.1 Escaneo Automatizado de Secretos
 
-El repositorio aplica escaneo automatizado de secretos como control estructural obligatorio.
+El repositorio aplica un control estructural obligatorio en dos niveles:
 
-- Las *Pull Request* fallarán si se detecta un secreto.
-- Se realizan escaneos programados completos del historial.
-- Los resultados se publican como reportes SARIF.
-- El permiso `security-events: write` se limita exclusivamente a la carga de dichos reportes.
+- **Nivel Local (Preventivo)**: El uso de `pre-commit` con ***TruffleHog*** es obligatorio para todos los colaboradores. Este control bloquea la creación del *commit* si se detectan secretos.
+- **Nivel CI (Reactivo)**: Cada *Pull Request* se somete a un escaneo diferencial. Los escaneos programados analizan el historial completo y publican reportes SARIF en el panel de seguridad.
 
-Deshabilitar o debilitar este control constituye una infracción de gobernanza.
-
+Cualquier intento de evasión (como el uso de `--no-verify`) sin una causa justificada y documentada se considera una infracción de gobernanza y un riesgo de seguridad de nivel **Alto**.
 
 ## 9. Gestión de *Tokens* Automatizados
 
@@ -144,7 +133,6 @@ La configuración de dichos *tokens* forma parte del modelo de seguridad estruct
 
 El uso indebido, ampliación de privilegios o reutilización fuera del flujo autorizado constituye un incidente de seguridad.
 
-
 ## 10. Protección de ramas y etiquetas
 
 La postura de seguridad requiere:
@@ -157,7 +145,6 @@ La postura de seguridad requiere:
 
 Deshabilitar estas protecciones constituye una infracción de gobernanza.
 
-
 ## 11. Seguridad y Cambios Importantes
 
 Si una corrección de seguridad requiere una modificación estructural:
@@ -165,7 +152,6 @@ Si una corrección de seguridad requiere una modificación estructural:
 - Puede activar una versión *MAJOR*.
 - Debe documentarse explícitamente.
 - No debe alterar las expectativas de gobernanza de forma silenciosa.
-
 
 ## 12. Responsabilidad del Mantenedor
 
@@ -177,7 +163,6 @@ Los mantenedores son responsables de:
 - Prevenir la erosión de la gobernanza.
 
 La seguridad es inseparable de la gobernanza.
-
 
 ## 13. Descargo de responsabilidad
 

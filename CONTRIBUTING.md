@@ -121,10 +121,41 @@ Los colaboradores no deben:
 - Debilitar los requisitos de protección de las ramas.
 - Modificar la automatización de las versiones sin justificación.
 
+Para prevenir la fuga accidental de credenciales, este repositorio implementa un escudo de seguridad obligatorio tanto en local como en la CI.
+
 Los cambios relacionados con la seguridad deben discutirse antes de su implementación.
 
 
-## 8. Estándares de Calidad del Código
+## 8. Escudo de Seguridad Local (Pre-commit)
+
+Es obligatorio configurar el *framework* de `pre-commit` para validar que no se introduzcan secretos antes de realizar cualquier envío. Usamos **TruffleHog** como motor de escaneo inmutable.
+
+### Requisitos previos por entorno (febrero 2026)
+
+#### 🪟 Windows (Nativo)
+1. Instalar *Python* y *pip*: `pip install pre-commit`
+2. Instalar *TruffleHog*: `scoop install trufflehog` o descarga del binario oficial.
+
+#### 🐧 Linux (WSL/Ubuntu) o 🍎 macOS
+1. Instalar el *framework*: `pipx install pre-commit` (o via *Homebrew*).
+2. Instalar *TruffleHog*: `brew install trufflehog` o via *script* oficial de *TruffleSecurity*.
+
+### Instalación en el repositorio
+Una vez instaladas las herramientas en su sistema, ejecute en la raíz del proyecto:
+```bash
+pre-commit install
+```
+
+---
+
+> [!IMPORTANT]
+> "Es obligatorio tener el binario de TruffleHog instalado y accesible globalmente en el sistema (PATH) antes de ejecutar pre-commit install, ya que el hook utiliza el motor local para garantizar la máxima velocidad de ejecución."
+
+El *commit* será rechazado automáticamente si se detecta un secreto. Para gestionar falsos positivos, consulte el archivo `.trufflehog.yaml`. El uso de `--no-verify` está estrictamente auditado y causará el fallo inmediato de la CI.
+
+
+
+## 9. Estándares de Calidad del Código
 
 Todos los *scripts* de *Bash* deben:
 
@@ -137,7 +168,7 @@ Todos los *scripts* de *Bash* deben:
 El cumplimiento de *ShellCheck* es obligatorio.
 
 
-## 9. Revisión y Aprobación
+## 10. Revisión y Aprobación
 
 Se requiere la aprobación de al menos un mantenedor antes de la fusión.
 
@@ -149,7 +180,7 @@ Los mantenedores pueden rechazar contribuciones que:
 - Disminuyan la integridad estructural.
 
 
-## 10. Autoridad del Mantenedor
+## 11. Autoridad del Mantenedor
 
 Los mantenedores son responsables de:
 
@@ -160,7 +191,7 @@ Los mantenedores son responsables de:
 Las reglas de gobernanza prevalecen sobre las preferencias individuales.
 
 
-## 11. Ampliación del *Baseline*
+## 12. Ampliación del *Baseline*
 
 Si propone ampliar la línea base:
 
