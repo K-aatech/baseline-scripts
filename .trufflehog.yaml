@@ -5,10 +5,19 @@
 # Ideal for test files with synthetic data or documentation.
 
 exclude_paths:
-    - "**/test/data/**"
-    - "docs/examples/**"
-    - "scripts/mock-secrets.sh"
-    - Known mock scripts
+    # Documentación y Guías (donde solemos poner ejemplos de tokens)
+    - "README.md"
+    - "SECURITY.md"
+    - "CONTRIBUTING.md"
+    - "docs/.*"
+
+    # Archivos de configuración de entorno y editores
+    - ".vscode/.*"
+    - ".editorconfig"
+
+    # Infraestructura de Git y Hooks
+    - ".git/.*"
+    - ".github/ISSUE_TEMPLATE/.*"
 
 # 2. Specific Detectors: If a detector is giving too many false positives,
 # you can disable it here. (Use with caution.)
