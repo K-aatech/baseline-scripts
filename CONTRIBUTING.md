@@ -8,7 +8,6 @@ Este proyecto sigue un estricto modelo de gobernanza para garantizar la integrid
 - [docs/versioning.md](docs/versioning.md)
 - [docs/bash-style-guide.md](docs/bash-style-guide.md)
 
-
 ## 1. Modelo de contribución
 
 Este repositorio sigue un flujo de trabajo *Trunk-Based*.
@@ -19,7 +18,6 @@ Reglas:
 - Todos los cambios deben enviarse mediante *Pull Request*.
 - *Squash merge* es obligatoria.
 - Las ramas deben ser de corta duración.
-
 
 ## 2. Convención de nombres de ramas
 
@@ -39,7 +37,6 @@ Ejemplos:
 - `docs/update-versioning-policy`
 
 Los nombres de las ramas deben escribirse en minúsculas y con guiones.
-
 
 ## 3. Convención de *Commit*
 
@@ -67,7 +64,6 @@ Ejemplos:
 
 Los *commits* se validan automáticamente. Los *commits* que no cumplan con los requisitos fallarán en la CI.
 
-
 ## 4. Requisitos de *Pull Request*
 
 Cada *Pull Request* debe:
@@ -80,7 +76,6 @@ Cada *Pull Request* debe:
 
 Si el cambio afecta a la gobernanza, el control de versiones o la estructura base, debe estar claramente justificado.
 
-
 ## 5. Definición de Finalizado
 
 Una contribución se considera completa cuando:
@@ -90,7 +85,6 @@ Una contribución se considera completa cuando:
 - La documentación se actualiza cuando es necesario.
 - No debilita las reglas de gobernanza.
 - Mantiene la compatibilidad estructural.
-
 
 ## 6. *BREAKING CHANGE*
 
@@ -111,7 +105,6 @@ o
 
 No declarar los cambios importantes puede bloquear la *Pull Request*.
 
-
 ## 7. Consideraciones de seguridad
 
 Los colaboradores no deben:
@@ -125,7 +118,6 @@ Para prevenir la fuga accidental de credenciales, este repositorio implementa un
 
 Los cambios relacionados con la seguridad deben discutirse antes de su implementación.
 
-
 ## 8. Escudo de Seguridad Local (Pre-commit)
 
 Es obligatorio configurar el *framework* de `pre-commit` para validar que no se introduzcan secretos antes de realizar cualquier envío. Usamos **TruffleHog** como motor de escaneo inmutable.
@@ -133,15 +125,19 @@ Es obligatorio configurar el *framework* de `pre-commit` para validar que no se 
 ### Requisitos previos por entorno (febrero 2026)
 
 #### 🪟 Windows (Nativo)
+
 1. Instalar *Python* y *pip*: `pip install pre-commit`
 2. Instalar *TruffleHog*: `scoop install trufflehog` o descarga del binario oficial.
 
 #### 🐧 Linux (WSL/Ubuntu) o 🍎 macOS
+
 1. Instalar el *framework*: `pipx install pre-commit` (o via *Homebrew*).
 2. Instalar *TruffleHog*: `brew install trufflehog` o via *script* oficial de *TruffleSecurity*.
 
 ### Instalación en el repositorio
+
 Una vez instaladas las herramientas en su sistema, ejecute en la raíz del proyecto:
+
 ```bash
 pre-commit install
 ```
@@ -153,7 +149,16 @@ pre-commit install
 
 El *commit* será rechazado automáticamente si se detecta un secreto. Para gestionar falsos positivos, consulte el archivo `.trufflehog.yaml`. El uso de `--no-verify` está estrictamente auditado y causará el fallo inmediato de la CI.
 
+### 💡 Gestión de Hallazgos y Falsos Positivos
 
+Si TruffleHog bloquea un *commit*:
+
+1. **Verifique el hallazgo:** El reporte en consola le indicará el archivo y la línea.
+2. **Si es un secreto real:** Rótele inmediatamente, elimínelo del historial y use variables de entorno o un *Secret Manager*.
+3. **Si es un falso positivo:** Añada la ruta del archivo al bloque `exclude_paths` en `.trufflehog.yaml`.
+
+> [!TIP]
+> **¿Git se congela al hacer *commit*?** > Asegúrese de que su agente GPG esté activo y desbloqueado. Si usa una llave con contraseña, el proceso esperará indefinidamente a que usted la introduzca en el *prompt* de su sistema.
 
 ## 9. Estándares de Calidad del Código
 
@@ -167,7 +172,6 @@ Todos los *scripts* de *Bash* deben:
 
 El cumplimiento de *ShellCheck* es obligatorio.
 
-
 ## 10. Revisión y Aprobación
 
 Se requiere la aprobación de al menos un mantenedor antes de la fusión.
@@ -179,7 +183,6 @@ Los mantenedores pueden rechazar contribuciones que:
 - Reduzcan el determinismo.
 - Disminuyan la integridad estructural.
 
-
 ## 11. Autoridad del Mantenedor
 
 Los mantenedores son responsables de:
@@ -189,7 +192,6 @@ Los mantenedores son responsables de:
 - Preservar el comportamiento determinista de las versiones.
 
 Las reglas de gobernanza prevalecen sobre las preferencias individuales.
-
 
 ## 12. Ampliación del *Baseline*
 
