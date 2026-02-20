@@ -18,5 +18,6 @@
         "workflows",
         "structure",
         "tooling"
-    ]
+    ],
+    "markdown.validate.enabled": true
 }

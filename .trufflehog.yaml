@@ -1,0 +1,23 @@
+# .trufflehog.yaml - Security Exclusion Configuration
+# Documentation: https://github.com/trufflesecurity/trufflehog
+
+# 1. Excluded Paths: Files that should NEVER be scanned.
+# Ideal for test files with synthetic data or documentation.
+
+exclude_paths:
+    - "**/test/data/**"
+    - "docs/examples/**"
+    - "scripts/mock-secrets.sh"
+    - Known mock scripts
+
+# 2. Specific Detectors: If a detector is giving too many false positives,
+# you can disable it here. (Use with caution.)
+
+# exclude_detectors:
+# - URI
+# Disable if it alerts for harmless dev URLs
+
+
+# 3. Verification Rules (Optional):
+# You can force only findings that the engine can verify to be reported.
+# verify: true
