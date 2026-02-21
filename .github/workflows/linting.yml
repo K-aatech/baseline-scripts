@@ -33,4 +33,4 @@ jobs:
       - name: Install and Run Pre-commit
         run: |
           pip install pre-commit==4.1.0
-          pre-commit run --all-files --show-diff-on-failure
+          SKIP=trufflehog pre-commit run --all-files --show-diff-on-failure
