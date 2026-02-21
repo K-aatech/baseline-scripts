@@ -30,5 +30,7 @@ jobs:
         with:
           python-version: '3.14' #Latest Python version on 2026-02
 
-      - name: Run pre-commit
-        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd #v3.0.1
+      - name: Install and Run Pre-commit
+        run: |
+          pip install pre-commit==4.5.1 --hash=sha256:eb545fcff725875197837263e977ea257a402056661f09dae08e4b149b030a61
+          pre-commit run --all-files --show-diff-on-failure
