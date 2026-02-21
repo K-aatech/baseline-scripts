@@ -4,14 +4,12 @@ Este repositorio adopta ***Semantic Versioning (SemVer 2.0.0)*** y utiliza ***Co
 
 El modelo está diseñado bajo un enfoque ***trunk-based*** con historial lineal, automatización obligatoria y gobernanza estricta sobre etiquetas y publicaciones.
 
-
 ## 1. Esquema de Versión
 
 Las versiones siguen el formato:
 
-**MAJOR.MINOR.PATCH**
-
-> Ejemplo:
+> **MAJOR.MINOR.PATCH** <br>
+> Ejemplo: <br>
 > **1.0.0**
 
 Las etiquetas se generan automáticamente con el prefijo `v`:
@@ -19,7 +17,6 @@ Las etiquetas se generan automáticamente con el prefijo `v`:
 `v1.0.0`
 
 No se permite la creación manual de etiquetas.
-
 
 ## 2. Fuente de Verdad del Versionado
 
@@ -29,13 +26,14 @@ No existen archivos de versión editables manualmente como fuente primaria.
 
 El incremento de versión es calculado automáticamente por `release-please` con base en el tipo de *commit*.
 
-
 ## 3. Reglas de Incremento
+
 ### 3.1 MAJOR
 
 Se incrementa cuando se introduce un cambio incompatible.
 
 Debe declararse mediante:
+
 - `feat!: descripción`
 - o incluir `BREAKING CHANGE:` en el cuerpo del *commit*
 
@@ -47,12 +45,12 @@ Debe declararse mediante:
 - Cambios en la política de versionado.
 - Alteración del contrato estructural definido en `docs/`.
 
-
 ### 3.2 MINOR
 
 Se incrementa cuando se agrega funcionalidad compatible hacia atrás.
 
 Activado por:
+
 - `feat:`
 
 Ejemplos:
@@ -60,7 +58,6 @@ Ejemplos:
 - Incorporación de nuevas plantillas opcionales.
 - Mejora no disruptiva de documentación.
 - Nuevas validaciones no obligatorias.
-
 
 ## 3.3 PATCH
 
@@ -76,7 +73,6 @@ Activado por:
 
 > [!NOTE]
 > `docs:` y `chore:` no generan incremento de versión por sí mismos.
-
 
 ## 4. Tipos de *Commit* Permitidos
 
@@ -98,7 +94,6 @@ Tipos admitidos:
 
 Todos los *commits* deben cumplir el estándar ***Conventional Commits*** y serán validados automáticamente por `commitlint`.
 
-
 ## 5. Flujo de Liberación (*Trunk-Based*)
 
 1. Toda modificación se desarrolla en una rama corta (`feat/*`, `fix/*`, etc.).
@@ -114,7 +109,6 @@ Todos los *commits* deben cumplir el estándar ***Conventional Commits*** y ser�
 
 No existen ramas permanentes de desarrollo (`dev`, `release`, etc.).
 
-
 ## 6. Restricciones Operativas
 
 No está permitido:
@@ -126,7 +120,6 @@ No está permitido:
 - Publicar *releases* fuera del flujo automatizado.
 
 Las etiquetas `vMAJOR.MINOR.PATCH` deben estar protegidas contra modificación o eliminación.
-
 
 ## 7. Integridad y Reproducibilidad
 
@@ -144,24 +137,24 @@ Cada versión publicada representa un estado:
 - Estructuralmente coherente
 - Gobernado por las políticas activas del repositorio
 
-
 ## 8. Versionado del *Baseline* vs Repos Derivados
 
 Este documento rige el versionado del repositorio `baseline-scripts`.
 
 Los repositorios generados a partir del baseline pueden:
+
 - Adoptar esta política sin cambios.
 - Extenderla.
 - Endurecerla.
 
 Pero cualquier desviación debe documentarse explícitamente.
 
-
 ## 9. Cumplimiento Obligatorio
 
 El sistema de versionado forma parte integral de la gobernanza técnica del repositorio.
 
 Cualquier cambio que altere esta política debe:
+
 - Realizarse mediante *Pull Request*.
 - Declararse explícitamente como cambio incompatible si aplica.
 - Seguir *Conventional Commits*.

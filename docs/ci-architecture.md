@@ -4,7 +4,6 @@ Este documento define la arquitectura de automatización del repositorio `baseli
 
 La CI no es un complemento; es el mecanismo de ejecución de la gobernanza técnica.
 
-
 ## 1. Principios de Diseño
 
 La arquitectura CI se rige por los siguientes principios:
@@ -17,7 +16,6 @@ La arquitectura CI se rige por los siguientes principios:
 - Separación de responsabilidades
 
 La CI convierte reglas declarativas en controles ejecutables.
-
 
 ## 2. Objetivos de la CI
 
@@ -32,7 +30,6 @@ La arquitectura de integración continua debe garantizar:
 7. Prevención de debilitamiento de gobernanza.
 
 Si una validación falla, el *Pull Request* no debe poder fusionarse.
-
 
 ## 3. Componentes Principales
 
@@ -83,7 +80,6 @@ El *token* debe:
 
 La arquitectura CI considera este *token* una excepción controlada, auditada y limitada al proceso de versionado automático.
 
-
 ### 3.3 Análisis Estático
 
 Debe incluir:
@@ -115,7 +111,6 @@ Se deben validar:
 - Compatibilidad con gobernanza.
 - No introducción de cambios incompatibles sin declaración explícita.
 
-
 ## 4. Flujo de Ejecución
 
 ### 4.1 En *Pull Request*
@@ -137,7 +132,6 @@ Debe ejecutarse:
 - Generación de PR de *release*.
 - Publicación de etiqueta tras aprobación.
 
-
 ## 5. Permisos y Seguridad
 
 Los *workflows* deben:
@@ -150,7 +144,6 @@ Los *workflows* deben:
 - Usar versiones fijas o controladas de acciones externas.
 
 La arquitectura CI forma parte del modelo de seguridad estructural.
-
 
 ## 6. CI como Control de Gobernanza
 
@@ -178,7 +171,6 @@ Cambios en la arquitectura CI que:
 
 Deben declararse como `BREAKING CHANGE` cuando afecten el contrato estructural.
 
-
 ## 8. Repositorios Derivados
 
 Los repositorios creados a partir de este *baseline* deben:
@@ -189,7 +181,6 @@ Los repositorios creados a partir de este *baseline* deben:
 - No debilitar controles obligatorios.
 
 La CI es parte integral del *baseline*.
-
 
 ## 9. Declaración Final
 

@@ -4,15 +4,17 @@ Este documento define los estándares obligatorios de ingeniería para *scripts*
 
 El cumplimiento de esta guía es obligatorio para garantizar confiabilidad, portabilidad, mantenibilidad y seguridad operativa.
 
-
 ## 1. Requisitos de Ejecución
 
 - ***Shell* mínimo requerido:** Bash >= 4.2
 - ***Shebang* obligatorio:**
+
     ```bash
-    #!/usr/bin/env bash 
+    #!/usr/bin/env bash
     ```
+
 - **Modo Seguro (Obligatorio):**
+
     ```bash
     set -euo pipefail
     ```
@@ -25,7 +27,6 @@ Significado:
 
 Cualquier excepción a esta regla debe estar documentada explícitamente en el encabezado del *script*.
 
-
 ## 2. Estándares de Formato
 
 - **Indentación:** 4 espacios (definido en `.editorconfig`)
@@ -33,33 +34,36 @@ Cualquier excepción a esta regla debe estar documentada explícitamente en el e
 - **Espacios en blanco al final:** No permitidos
 - **Mezcla de tabs y espacios:** Prohibida
 
-
 ## 3. Convenciones de Nombres
 
 - **Variables globales:** `UPPER_CASE`
+
     ```bash
     BACKUP_DIR="/var/backups"
     ```
 
 - **Variables locales:** `snake_case`
+
     ```bash
     local file_path="/tmp/data"
     ```
 
 - **Funciones:** `snake_case`
+
     ```bash
     check_status() { ... }
     ```
+
 - **Constantes:** `UPPER_CASE`
 
 Evitar nombres de una sola letra salvo en *loops* de alcance reducido.
-
 
 ## 4. Gestión de Dependencias
 
 Todo *script* que dependa de binarios externos debe validarlos antes de ejecutar lógica principal.
 
 Patrón recomendado:
+
 ```bash
 `require_command() {
     command -v "$1" >/dev/null 2>&1 || {
@@ -71,35 +75,34 @@ Patrón recomendado:
 
 Las dependencias deben validarse al inicio del *script*.
 
-
 ## 5. Manejo de Errores
 
 - Código de salida:
-    -   `0` → éxito
-    -   `1` → error genérico
-    -   Códigos personalizados solo si están documentados
+  - `0` → éxito
+  - `1` → error genérico
+  - Códigos personalizados solo si están documentados
 
 - Está prohibido suprimir errores silenciosamente.
 - Evitar `|| true` salvo justificación documentada.
-
 
 ## 6. Idempotencia (Obligatoria)
 
 Los *scripts* deben ser seguros de ejecutar múltiples veces sin efectos secundarios indeseados.
 
 Ejemplo correcto:
+
 ```bash
 `grep -qxF "config" /etc/file || echo "config" >> /etc/file`
 ```
 
 Evitar operaciones que agreguen o sobrescriban contenido sin validación previa.
 
-
 ## 7. Limpieza y Manejo de Señales
 
 Si el *script* genera archivos temporales o realiza modificaciones transitorias, debe implementar limpieza mediante `trap`.
 
 Ejemplo:
+
 ```bash
 `cleanup() {
     rm -f "$temp_file"
@@ -110,19 +113,20 @@ trap cleanup EXIT`
 
 Cuando sea pertinente, manejar señales `INT` y `TERM`.
 
-
 ## 8. Manejo Seguro de Entrada
 
 - Citar siempre las expansiones de variables:
-    ```bash   
+
+    ```bash
     "$variable"
     ```
+
 - Evitar sustituciones no citadas.
 - Controlar `IFS` explícitamente al iterar sobre entrada externa:
+
     ```bash
     IFS=$'\n\t'
     ```
-
 
 ## 9. Estrategia de *Logging*
 
@@ -136,8 +140,7 @@ Para automatizaciones de mayor complejidad se recomienda:
 
 La implementación de *logging* no debe acoplarse a la lógica de negocio.
 
-
-# 10. Estándares de Documentación
+## 10. Estándares de Documentación
 
 - **Idioma del código:** Inglés (variables, funciones, comentarios técnicos)
 - **Idioma de manuales y guías:** Español
@@ -151,8 +154,7 @@ Cada *script* debe incluir un bloque inicial que describa:
 - Dependencias
 - Códigos de salida
 
-
-# 11. *Linting* y Análisis Estático
+## 11. *Linting* y Análisis Estático
 
 Todos los *scripts* deben:
 
@@ -162,8 +164,7 @@ Todos los *scripts* deben:
 
 Las advertencias deben resolverse o justificarse explícitamente.
 
-
-# 12. Prácticas Prohibidas
+## 12. Prácticas Prohibidas
 
 - Usar `#!/bin/bash`
 - Omitir `set -euo pipefail`
@@ -171,8 +172,7 @@ Las advertencias deben resolverse o justificarse explícitamente.
 - *Hardcodear* rutas específicas de entorno sin documentación
 - Mezclar *tabs* y espacios
 
-
-# 13. Principios de Diseño
+## 13. Principios de Diseño
 
 Los *scripts* derivados de este *baseline* deben cumplir:
 
@@ -181,8 +181,7 @@ Los *scripts* derivados de este *baseline* deben cumplir:
 - Supuestos externos mínimos
 - Separación clara entre configuración y lógica
 
-
-# 14. Cumplimiento del *Baseline*
+## 14. Cumplimiento del *Baseline*
 
 Todo repositorio generado desde `baseline-scripts` debe:
 
