@@ -1,7 +1,8 @@
 # *Baseline Scripts* 🛡️
 
-![Linting](https://github.com/K-aatech/baseline-scripts/actions/workflows/linting.yml/badge.svg?branch=main)
-![Security](https://github.com/K-aatech/baseline-scripts/actions/workflows/secret-scanning.yml/badge.svg?branch=main)
+[![Linting & Standards](https://github.com/K-aatech/baseline-scripts/actions/workflows/linting.yml/badge.svg)](https://github.com/K-aatech/baseline-scripts/actions/workflows/linting.yml)
+[![Secret Scanning (TruffleHog)](https://github.com/K-aatech/baseline-scripts/actions/workflows/secret-scanning.yml/badge.svg)](https://github.com/K-aatech/baseline-scripts/actions/workflows/secret-scanning.yml)
+[![CodeQL](https://github.com/K-aatech/baseline-scripts/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/K-aatech/baseline-scripts/actions/workflows/github-code-scanning/codeql)
 ![License](https://img.shields.io/github/license/K-aatech/baseline-scripts)
 
 Este es un **Repositorio Template** diseñado para ser la base de cualquier proyecto de automatización. Su objetivo es eliminar la fatiga de configuración inicial, garantizando que cada *script* nazca en un entorno con estándares de calidad y seguridad empresarial.

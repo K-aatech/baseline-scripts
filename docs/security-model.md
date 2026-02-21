@@ -126,6 +126,14 @@ La desactivación de estos mecanismos o el uso de `--no-verify` sin justificaci�
 
 Las excepciones legítimas se gestionan centralizadamente mediante el archivo `.trufflehog.yaml`. Cualquier adición a este archivo requiere revisión por parte de los *Code Owners*.
 
+#### 5.4.4 Ciclo de Remediación (Post-Fuga)
+
+La detección es insuficiente sin un protocolo de respuesta. En caso de que un secreto sea persistido en el historial:
+
+- **Revocación**: El secreto se considera comprometido y debe invalidarse en el origen inmediatamente.
+- **Saneamiento**: Se exige el uso de herramientas de reescritura de historial (`git filter-repo`) para eliminar la huella del secreto en todos los nodos del grafo de Git.
+- **Sincronización forzada**: La rama afectada debe ser sobrescrita en el remoto (`force-push`) tras el saneamiento, notificando a los interesados para resincronizar clones locales.
+
 ## 6. Consideraciones sobre la Cadena de Suministro
 
 Los riesgos de seguridad pueden provenir de:

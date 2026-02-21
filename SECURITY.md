@@ -116,6 +116,33 @@ El repositorio aplica un control estructural obligatorio en dos niveles:
 
 Cualquier intento de evasión (como el uso de `--no-verify`) sin una causa justificada y documentada se considera una infracción de gobernanza y un riesgo de seguridad de nivel **Alto**.
 
+### 8.2 Protocolo de Remediación (Incidente de Fuga)
+
+Si un secreto llega a ser persistido en el historial de *Git*, el daño no se repara borrando la línea y haciendo un nuevo *commit*. Se debe actuar bajo el siguiente protocolo de "Tierra Quemada":
+
+1. **Invalidación Inmediata**: Revocar el *token*, llave o *password* en el servicio proveedor (AWS, GitHub, GCP, etc.). **Este es el paso más crítico.**
+2. **Rotación**: Generar nuevas credenciales.
+3. **Limpieza del Historial**: Para eliminar el rastro del secreto en todos los *commits* y etiquetas, se recomienda el uso de `git filter-repo` (sustituto moderno de BFG):
+
+    ```bash
+    # Ejemplo para eliminar un archivo que contenía secretos en todo el historial
+    git filter-repo --path path/to/secret_file --invert-paths
+    ```
+
+   - **Reescritura de Etiquetas**: Si el secreto estaba presente en alguna etiqueta, también se deben reescribir:
+
+      ```bash
+      git filter-repo --refs refs/tags/* --path path/to/secret_file --invert-paths
+      ```
+
+4. **Notificación**: Informar a los mantenedores y colaboradores sobre el incidente mediante el reporte privado e vulnerabilidades mencionado en la Sección 2.
+5. **Forzar Actualización**: Tras la limpieza local, será necesario un `git push origin --force` en las ramas afectadas para sobrescribir el historial remoto comprometido.
+
+   > [!CAUTION]
+   > El uso de `--force` puede afectar a otros colaboradores. Se recomienda coordinar esta acción para minimizar interrupciones.
+
+6. **Documentación Interna**: Registrar el incidente, las acciones tomadas y las lecciones aprendidas en un documento interno de seguridad.
+
 ## 9. Gestión de *Tokens* Automatizados
 
 El repositorio puede utilizar *tokens* de automatización para procesos de *release* u otras operaciones controladas de CI.
