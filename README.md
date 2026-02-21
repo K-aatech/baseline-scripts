@@ -1,8 +1,8 @@
 # *Baseline Scripts* 🛡️
 
-![Linting](https://github.com/albertochungvz/baseline-scripts/actions/workflows/linting.yml/badge.svg)
-![Security](https://github.com/albertochungvz/baseline-scripts/actions/workflows/secret-scanning.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Linting](https://github.com/K-aatech/baseline-scripts/actions/workflows/linting.yml/badge.svg?branch=main)
+![Security](https://github.com/K-aatech/baseline-scripts/actions/workflows/secret-scanning.yml/badge.svg?branch=main)
+![License](https://img.shields.io/github/license/K-aatech/baseline-scripts)
 
 Este es un **Repositorio Template** diseñado para ser la base de cualquier proyecto de automatización. Su objetivo es eliminar la fatiga de configuración inicial, garantizando que cada *script* nazca en un entorno con estándares de calidad y seguridad empresarial.
 
