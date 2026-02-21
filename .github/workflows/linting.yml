@@ -31,6 +31,8 @@ jobs:
           python-version: '3.14' #Latest Python version on 2026-02
 
       - name: Install and Run Pre-commit
+        #We created a temporary requirements.txt file with the hash of version
         run: |
-          pip install pre-commit==4.5.1 --hash=sha256:eb545fcff725875197837263e977ea257a402056661f09dae08e4b149b030a61
+          echo "pre-commit==4.5.1 --hash=sha256:eb545fcff725875197837263e977ea257a402056661f09dae08e4b149b030a61" > requirements-lint.txt
+          pip install -r requirements-lint.txt
           pre-commit run --all-files --show-diff-on-failure
