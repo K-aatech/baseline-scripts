@@ -1,21 +1,20 @@
-## 📝 Resumen
+## 📝 Summary
 
-## 🛠️ Cambios Realizados
+## 🛠️ Changes Made
 
-- [ ] ✨ Feature / 🐛 Fix / 🏗️ Infra
-- [ ] Detalle breve:
+- [ ] ✨ Feature / 🐛 Fix / 🏗️ Infrastructure
+- [ ] Brief Detail:
 
-## 🧪 Evidencia de Pruebas
+## 🧪 Test Evidence
 
-- [ ] **Linting:** `pre-commit run --all-files` (Obligatorio)
-- [ ] **Ejecución:** El script/workflow se probó en \[Local/CI] y el resultado fue:
-`Pega aquí un extracto pequeño del éxito de la corrida`
+- [ ] **Linting:** `pre-commit run --all-files` (Required)
+- [ ] **Execution:** The script/workflow was tested on \[Local/CI] and the result was: ``Paste a short excerpt of the successful run here`
 
-## 🛡️ Checklist de Calidad
+## 🛡️ Quality Checklist
 
-- [ ] Commits siguen **Conventional Commits**.
-- [ ] Documentación actualizada (README/Comentarios).
-- [ ] No se han incluido secretos (TruffleHog pasó).
-- [ ] ¿Se actualizaron los archivos de configuración si hubo cambios en los hooks?
+- [ ] Commits follow **Conventional Commits**.
+- [ ] Updated documentation (README/Comments).
+- [ ] No secrets included (TruffleHog passed).
+- [ ] Were the configuration files updated if there were changes to the hooks?
 
-## 📸 Capturas (si aplica)
+## 📸 Screenshots (if applicable)
