@@ -7,13 +7,15 @@ module.exports = {
       [
         'feat',
         'fix',
-        'perf',
-        'refactor',
         'docs',
-        'ci',
+        'style',
+        'refactor',
+        'perf',
         'test',
+        'build',
+        'ci',
         'chore',
-        'build'
+        'revert',
       ]
     ],
     'scope-case': [2, 'always', 'lower-case'],

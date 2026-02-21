@@ -1,4 +1,5 @@
 repos:
+  # --- LOCAL / BINARY HOOKS ---
   - repo: local
     hooks:
       - id: trufflehog
@@ -7,3 +8,32 @@ repos:
         entry: trufflehog git file://. --since-commit HEAD --results=verified,unverified,unknown --fail
         language: system
         pass_filenames: false
+        stages: [pre-commit]
+
+  # --- HOOKS DE UTILIDAD Y JSON ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # v6.0.0
+    hooks:
+      - id: check-json           # Validate JSON syntax
+        exclude: ^.vscode/       # Exclude the VS Code folder to prevent errors due to comments
+      - id: check-yaml           # Validate YAML syntax
+        args: [--allow-multiple-documents]
+      - id: end-of-file-fixer    # Ensure an empty line at the end of files
+      - id: trailing-whitespace  # Remove unnecessary spaces at the end of the line
+      - id: mixed-line-ending    # Final reinforcement to secure LF line endings
+        args: ['--fix=lf']
+
+  # --- HOOK DE MARKDOWN ---
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: 76b3d32d3f4b965e1d6425253c59407420ae2c43 # v0.47.0
+    hooks:
+      - id: markdownlint
+        args: ["--config", ".markdownlint.yaml", "--fix"]
+
+  # --- HOOK DE CONVENTIONAL COMMITS ---
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: 91ab4bf57e58b32adf1a122681f6ebe164d081c8 # v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"]

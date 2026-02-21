@@ -4,7 +4,6 @@ Este documento define el modelo de seguridad estructural del repositorio `baseli
 
 La seguridad en este *baseline* no se limita a la gestión de vulnerabilidades, se integra en la gobernanza, la automatización y la aplicación estructural.
 
-
 ## 1. Filosofía de Seguridad
 
 La línea base está diseñada bajo los siguientes principios:
@@ -17,7 +16,6 @@ La línea base está diseñada bajo los siguientes principios:
 - Artefactos de lanzamiento inmutables
 
 La seguridad se considera inseparable de la gobernanza del repositorio.
-
 
 ## 2. Recursos a Proteger
 
@@ -32,7 +30,6 @@ Los principales recursos de este repositorio son:
 7. Modelo de confianza del colaborador
 
 La vulneración de cualquiera de estos recursos se considera un evento de seguridad.
-
 
 ## 3. Modelo de Amenazas
 
@@ -49,7 +46,6 @@ Esta línea base asume riesgos potenciales, incluyendo:
 
 La postura de seguridad busca mitigar estos riesgos estructuralmente.
 
-
 ## 4. Límites de Confianza
 
 El repositorio aplica los siguientes límites de confianza:
@@ -61,7 +57,6 @@ El repositorio aplica los siguientes límites de confianza:
 - Los cambios en la gobernanza requieren una revisión explícita.
 
 Cualquier intento de cruzar estos límites debe considerarse un problema de seguridad.
-
 
 ## 5. Controles Estructurales
 
@@ -110,13 +105,17 @@ El uso indebido o expansión de privilegios constituye un incidente de seguridad
 El repositorio prohíbe la persistencia de credenciales, *tokens* o llaves en el historial. Se implementa una estrategia de **Defensa en Profundidad** mediante el escaneo automatizado en dos niveles:
 
 #### 5.4.1 Escudo Proactivo (Local / *Pre-commit*)
+
 Como primera línea de defensa, es obligatorio el uso del *framework* `pre-commit` vinculado a **TruffleHog**.
+
 - **Intercepción**: El escaneo ocurre en la máquina del desarrollador antes de que el *commit* sea creado.
 - **Alineación**: Utiliza la misma versión del motor y reglas que la CI para garantizar paridad de resultados.
 - **Bloqueo**: Impide la creación del *commit* si se detectan hallazgos *verified*, *unverified* o de alta entropía.
 
 #### 5.4.2 Escudo Reactivo y Trazabilidad (CI / SARIF)
+
 Como red de seguridad final, el flujo de trabajo en *GitHub Actions* ejecuta un escaneo exhaustivo:
+
 - **Diferencial**: Las *Pull Request* se escanean contra el diferencial respecto a `main`.
 - **Histórico**: Los escaneos programados analizan el historial completo del repositorio.
 - **Trazabilidad**: Los resultados se publican en formato SARIF, permitiendo que las alertas se gestionen directamente en la pestaña de *Security* de *GitHub*.
@@ -124,8 +123,8 @@ Como red de seguridad final, el flujo de trabajo en *GitHub Actions* ejecuta un 
 La desactivación de estos mecanismos o el uso de `--no-verify` sin justificación constituye un evento de seguridad crítico.
 
 #### 5.4.3 Gestión de Falsos Positivos
-Las excepciones legítimas se gestionan centralizadamente mediante el archivo `.trufflehog.yaml`. Cualquier adición a este archivo requiere revisión por parte de los *Code Owners*.
 
+Las excepciones legítimas se gestionan centralizadamente mediante el archivo `.trufflehog.yaml`. Cualquier adición a este archivo requiere revisión por parte de los *Code Owners*.
 
 ## 6. Consideraciones sobre la Cadena de Suministro
 
@@ -146,7 +145,6 @@ Las estrategias de mitigación incluyen:
 
 Las actualizaciones de dependencias no deben debilitar las garantías de gobernanza.
 
-
 ## 7. Integridad de la versión
 
 La integridad de la versión depende de:
@@ -157,7 +155,6 @@ La integridad de la versión depende de:
 - Etiquetas inmutables
 
 Cualquier intervención manual en el control de versiones constituye una vulneración de la integridad del proceso.
-
 
 ## 8. Gobernanza como seguridad
 
@@ -174,7 +171,6 @@ Sin declarar cambios importantes, se debilita la seguridad estructural.
 
 Por lo tanto, las modificaciones de gobernanza se consideran cambios de alto impacto.
 
-
 ## 9. Principio de Mínimo Privilegio
 
 Los flujos de trabajo y los encargados de mantenimiento deben operar con el mínimo privilegio:
@@ -184,7 +180,6 @@ Los flujos de trabajo y los encargados de mantenimiento deben operar con el mín
 - *Tokens* de automatización controlados
 
 Las acciones administrativas deben limitarse a los encargados de mantenimiento designados.
-
 
 ## 10. Clasificación de Incidentes
 
@@ -207,7 +202,6 @@ Los incidentes pueden clasificarse como:
 
 La severidad determina el nivel de respuesta y remediación requerida.
 
-
 ## 11. Responsabilidad Derivada del Repositorio
 
 Los repositorios derivados de esta línea base deben:
@@ -218,19 +212,18 @@ Los repositorios derivados de esta línea base deben:
 
 Cualquier desviación del modelo de seguridad de la línea base debe documentarse explícitamente.
 
-
 ## 12. Decisiones de Herramientas de Seguridad
 
 Se evaluó *Gitleaks* como herramienta de escaneo de secretos. La versión reciente introduce requisitos de licencia para uso organizacional, lo cual genera dependencia externa y reduce la portabilidad del *baseline*.
 
 Se adopta **TruffleHog** como estándar inmutable:
+
 - **Independencia**: Sin requisito de licencia comercial para el motor OSS.
 - **Determinismo**: Ejecución mediante binario específico versionado por SHA256.
 - **Integridad**: Validación de *checksum* en tiempo de ejecución de CI.
 - **Omnicanalidad**: El mismo binario protege el entorno local (*Windows*/*Linux*) y la nube (*GitHub Actions*).
 
 Las decisiones de herramientas deben preservar la independencia, portabilidad y determinismo del modelo de seguridad.
-
 
 ## 13. Evolución del Modelo
 

@@ -4,7 +4,6 @@ Este proyecto adopta un entorno de colaboración profesional, respetuoso y técn
 
 La gobernanza técnica definida en este repositorio requiere un entorno de trabajo basado en respeto, responsabilidad y claridad.
 
-
 ## 1. Propósito
 
 Este Código de Conducta tiene como objetivo:
@@ -21,7 +20,6 @@ Aplica a todos los espacios del proyecto, incluyendo:
 - Revisiones de código
 - Discusiones técnicas
 - Documentación
-
 
 ## 2. Comportamiento Esperado
 
@@ -41,7 +39,6 @@ Las decisiones deben priorizar:
 - Seguridad
 - Coherencia con la gobernanza definida
 
-
 ## 3. Comportamiento Inaceptable
 
 No se tolera:
@@ -54,7 +51,6 @@ No se tolera:
 - Introducción maliciosa de vulnerabilidades o secretos.
 
 Las conductas que afecten la integridad técnica del proyecto también pueden considerarse incumplimiento del código.
-
 
 ## 4. Resolución de Conflictos
 
@@ -85,7 +81,6 @@ Los mantenedores deben:
 - Intervenir ante comportamientos inapropiados.
 - Garantizar que la discusión técnica permanezca profesional.
 
-
 ## 6. Aplicación
 
 El incumplimiento de este Código de Conducta puede resultar en:
@@ -97,7 +92,6 @@ El incumplimiento de este Código de Conducta puede resultar en:
 - Exclusión del proyecto, en casos graves.
 
 La aplicación debe ser proporcional y documentada.
-
 
 ## 7. Declaración Final
 
