@@ -107,6 +107,24 @@ Todos los mensajes deben cumplir con el estándar **Conventional Commits** y son
 
 Consulte el [Setup Checklist](./setup-checklist.md) para habilitar la validación local.
 
+### 4.1 Ámbitos Sugeridos (*Scopes*)
+
+Para mejorar la trazabilidad, se recomienda el uso de *scopes* que vinculen el cambio con la estructura del repositorio. Aunque el sistema permite cualquier texto en minúsculas, los ámbitos estandarizados son:
+
+| Ámbito        | Descripción                                      | Carpeta Relacionada |
+| :------------ | :----------------------------------------------- | :------------------ |
+| `audit`       | Lógica de cumplimiento y scripts de auditoría.   | `audit/`            |
+| `hardening`   | Scripts de endurecimiento y seguridad.           | `hardening/`        |
+| `maintenance` | Tareas de limpieza o scripts de soporte.         | `maintenance/`      |
+| `scripts`     | Herramientas generales de automatización.        | `scripts/`          |
+| `lib`         | Funciones compartidas y bibliotecas.             | `lib/`              |
+| `docs`        | Cambios exclusivos en documentación.             | `docs/`             |
+| `setup`       | Configuración de entorno y guías de inicio.      | -                   |
+| `governance`  | Modificaciones en políticas y reglas del repo.   | -                   |
+| `ci`          | Workflows, *hooks* y automatización de procesos. | `.github/`          |
+
+**Ejemplo:** `feat(hardening): add kernel parameter validation script`
+
 ## 5. Flujo de Liberación (*Trunk-Based*)
 
 1. Toda modificación se desarrolla en una rama corta (`feat/*`, `fix/*`, etc.).
