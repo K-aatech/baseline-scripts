@@ -48,13 +48,15 @@ Tipos permitidos:
 
 - `feat`
 - `fix`
-- `perf`
-- `refactor`
 - `docs`
-- `ci`
+- `style`
+- `refactor`
+- `perf`
 - `test`
-- `chore`
 - `build`
+- `ci`
+- `chore`
+- `revert`
 
 Ejemplos:
 
@@ -118,36 +120,25 @@ Para prevenir la fuga accidental de credenciales, este repositorio implementa un
 
 Los cambios relacionados con la seguridad deben discutirse antes de su implementación.
 
-## 8. Escudo de Seguridad Local (Pre-commit)
+## 8. Escudo de Seguridad Local (**pre-commit**)
 
 Es obligatorio configurar el *framework* de `pre-commit` para validar que no se introduzcan secretos antes de realizar cualquier envío. Usamos **TruffleHog** como motor de escaneo inmutable.
 
-### Requisitos previos por entorno (febrero 2026)
+### Requisitos e Instalación
 
-#### 🪟 Windows (Nativo)
+Para garantizar la paridad con la CI, debe instalar las dependencias base (`Python`, `TruffleHog`, `ShellCheck`) siguiendo nuestra guía centralizada:
 
-1. Instalar *Python* y *pip*: `pip install pre-commit`
-2. Instalar *TruffleHog*: `scoop install trufflehog` o descarga del binario oficial.
+👉 [**Guía de Configuración del Entorno (Setup Checklist)**](./docs/setup-checklist.md)
 
-#### 🐧 Linux (WSL/Ubuntu) o 🍎 macOS
-
-1. Instalar el *framework*: `pipx install pre-commit` (o via *Homebrew*).
-2. Instalar *TruffleHog*: `brew install trufflehog` o via *script* oficial de *TruffleSecurity*.
-
-### Instalación en el repositorio
-
-Una vez instaladas las herramientas en su sistema, ejecute en la raíz del proyecto:
+Una vez instaladas las herramientas en su sistema, inicialice los hooks en la raíz del proyecto:
 
 ```bash
-pre-commit install
+pre-commit install --install-hooks
+pre-commit install --hook-type commit-msg
 ```
 
----
-
 > [!IMPORTANT]
-> "Es obligatorio tener el binario de TruffleHog instalado y accesible globalmente en el sistema (PATH) antes de ejecutar pre-commit install, ya que el hook utiliza el motor local para garantizar la máxima velocidad de ejecución."
-
-El *commit* será rechazado automáticamente si se detecta un secreto. Para gestionar falsos positivos, consulte el archivo `.trufflehog.yaml`. El uso de `--no-verify` está estrictamente auditado y causará el fallo inmediato de la CI.
+> El uso de --no-verify está estrictamente auditado y causará el fallo inmediato de la CI.
 
 ### 💡 Gestión de Hallazgos y Falsos Positivos
 
@@ -162,15 +153,27 @@ Si TruffleHog bloquea un *commit*:
 
 ## 9. Estándares de Calidad del Código
 
-Todos los *scripts* de *Bash* deben:
+### 9.1 *Scripts* de *Bash*
 
-- Seguir la [Guía de Estilo de *Bash*](docs/bash-style-guide.md).
+Todos los *scripts* deben:
+
+- Seguir la [Guía de Estilo de Bash](docs/bash-style-guide.md).
+- Pasar la validación de **ShellCheck** (ejecutada localmente por el hook y en CI).
 - Usar `set -euo pipefail`.
 - Validar las dependencias externas.
 - Implementar la gestión explícita de errores.
 - Ser idempotente cuando corresponda.
 
 El cumplimiento de *ShellCheck* es obligatorio.
+
+### 9.2 Formato de Archivos (*Linting*)
+
+El repositorio aplica reglas estrictas de formato para archivos no ejecutables mediante el *workflow* `linting.yml`:
+
+- **Markdown**: Cumplimiento de `markdownlint`.
+- **Esquemas**: Validación de sintaxis en archivos `YAML` y `JSON`.
+
+Se recomienda activar el "Format on Save" en su editor para evitar rechazos en la CI.
 
 ## 10. Revisión y Aprobación
 
