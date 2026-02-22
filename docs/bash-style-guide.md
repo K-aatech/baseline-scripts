@@ -65,12 +65,13 @@ Todo *script* que dependa de binarios externos debe validarlos antes de ejecutar
 Patrón recomendado:
 
 ```bash
-`require_command() {
-    command -v "$1" >/dev/null 2>&1 || {
-        echo "Missing required command: $1" >&2
+require_command() {
+    local cmd="$1"
+    command -v "$cmd" >/dev/null 2>&1 || {
+        echo "ERROR: Missing required command: $cmd" >&2
         exit 1
     }
-}`
+}
 ```
 
 Las dependencias deben validarse al inicio del *script*.
@@ -92,7 +93,7 @@ Los *scripts* deben ser seguros de ejecutar múltiples veces sin efectos secunda
 Ejemplo correcto:
 
 ```bash
-`grep -qxF "config" /etc/file || echo "config" >> /etc/file`
+grep -qxF "config" /etc/file || echo "config" >> /etc/file`
 ```
 
 Evitar operaciones que agreguen o sobrescriban contenido sin validación previa.
@@ -104,7 +105,7 @@ Si el *script* genera archivos temporales o realiza modificaciones transitorias,
 Ejemplo:
 
 ```bash
-`cleanup() {
+cleanup() {
     rm -f "$temp_file"
 }
 
@@ -128,9 +129,13 @@ Cuando sea pertinente, manejar señales `INT` y `TERM`.
     IFS=$'\n\t'
     ```
 
+Todo *script* que acepte argumentos debe validar que los parámetros obligatorios no estén vacíos antes de proceder.
+
 ## 9. Estrategia de *Logging*
 
-El uso directo de `echo` está permitido en *scripts* simples.
+El uso directo de `echo` está permitido en *scripts* simples. <br>
+Ejemplo:
+`echo "Error: File not found" >&2`
 
 Para automatizaciones de mayor complejidad se recomienda:
 
@@ -139,6 +144,14 @@ Para automatizaciones de mayor complejidad se recomienda:
 - Formato consistente
 
 La implementación de *logging* no debe acoplarse a la lógica de negocio.
+
+Los mensajes de error deben redirigirse obligatoriamente a `stderr` (`>&2`) para no interferir con la salida de datos del *script*.
+
+```bash
+log_error() {
+    echo "[ERROR] $*" >&2
+}
+```
 
 ## 10. Estándares de Documentación
 
@@ -171,6 +184,8 @@ Las advertencias deben resolverse o justificarse explícitamente.
 - Suprimir errores silenciosamente
 - *Hardcodear* rutas específicas de entorno sin documentación
 - Mezclar *tabs* y espacios
+- Usar `echo` para reportar fallas críticas o errores sin redirección a `stderr`.
+- Utilizar variables no inicializadas.
 
 ## 13. Principios de Diseño
 
