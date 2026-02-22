@@ -19,7 +19,7 @@ module.exports = {
             ],
         ],
         "scope-enum": [
-            2,
+            1,
             "always",
             [
                 "audit", // docs/governance-baseline.md
