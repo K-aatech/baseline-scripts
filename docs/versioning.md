@@ -84,15 +84,28 @@ Tipos admitidos:
 
 - `feat`
 - `fix`
-- `perf`
-- `refactor`
 - `docs`
-- `ci`
+- `style`
+- `refactor`
+- `perf`
 - `test`
-- `chore`
 - `build`
+- `ci`
+- `chore`
+- `revert`
 
-Todos los *commits* deben cumplir el estándar ***Conventional Commits*** y serán validados automáticamente por `commitlint`.
+Todos los mensajes deben cumplir con el estándar **Conventional Commits** y son auditados en dos momentos críticos:
+
+1. **Validación Preventiva (Local)**:
+   Al intentar realizar un *commit*, el *hook* `conventional-pre-commit` (gestionado por `pre-commit`) valida el mensaje antes de que se cree el registro en *Git*.
+
+2. **Validación de Integridad (CI)**:
+   El *workflow* especializado `commitlint.yml` audita el historial de la *Pull Request* en la nube. Esto garantiza que el estándar se mantenga incluso si se realizan ediciones en la interfaz de *GitHub* o mediante fusiones.
+
+    > [!TIP]
+    > Si el *linter* local falla, el *commit* será rechazado. Esto previene ciclos de "*fix commit message*" innecesarios en la CI.
+
+Consulte el [Setup Checklist](./setup-checklist.md) para habilitar la validación local.
 
 ## 5. Flujo de Liberación (*Trunk-Based*)
 
@@ -102,7 +115,7 @@ Todos los *commits* deben cumplir el estándar ***Conventional Commits*** y ser�
 4. La fusión se realiza exclusivamente mediante ***squash merge***.
 5. `release-please` evalúa automáticamente el historial.
 6. Se genera o actualiza el *Pull Request* de versión.
-7. Al fusionarse el PR de versión:
+7. Al fusionarse el PR de versión (gestionado por un *Token* de automatización para permitir la ejecución de checks cruzados):
     - Se actualiza `CHANGELOG.md`.
     - Se crea la etiqueta correspondiente.
     - Se consolida el manifiesto de versión.

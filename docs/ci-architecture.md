@@ -37,6 +37,7 @@ La arquitectura CI se compone de los siguientes bloques:
 
 ### 3.1 Validación de *Commits*
 
+Se ejecuta en el *workflow* `linting.yml` mediante `commitlint` con configuración basada en [Conventional Commits](https://www.conventionalcommits.org/).
 Responsable de:
 
 - Validar formato según *Conventional Commits*.
@@ -82,28 +83,30 @@ La arquitectura CI considera este *token* una excepción controlada, auditada y 
 
 ### 3.3 Análisis Estático
 
-Debe incluir:
+Análisis automatizado para garantizar la calidad del código:
 
-- Ejecución de *ShellCheck*.
-- Validación contra la [Bash Style Guide](./bash-style-guide.md)
-- Reporte estructurado de hallazgos.
+- **ShellCheck (`shellcheck.yml`)**: Valida la lógica y sintaxis de *scripts* `.sh`. Los hallazgos de severidad 'error' y 'warning' bloquean el *pipeline*.
+- **Bash Style Guide**: Los *scripts* deben alinearse manualmente con la [guía de estilo interna](./bash-style-guide.md), siendo *ShellCheck* el principal mecanismo de refuerzo de estas reglas.
+- **Format & Schema (`linting.yml`)**: Validación de sintaxis para `YAML`, `JSON` y consistencia de documentación en `Markdown`.
 
-Cuando sea posible, los resultados deben publicarse en formato SARIF para integrarse con herramientas de seguridad de la plataforma.
+Cuando es posible, los resultados se publican en formato **SARIF** para integrarse con el panel de *Security Code Scanning* de *GitHub*.
 
-### 3.4 Validación Estructural
+### 3.4 Estándares de Formato (*Linting*)
 
-La CI debe garantizar que:
+Garantiza que la documentación y configuraciones sean legibles y válidas:
 
-- Archivos obligatorios no hayan sido eliminados.
-- No se debiliten reglas estructurales.
-- No se modifique la política de versionado sin declaración explícita.
-- No se introduzcan secretos.
+- **`linting.yml`**: Ejecuta validaciones de `Markdown`, `YAML` y `JSON`. Previene errores de sintaxis en la infraestructura de *GitHub Actions*.
 
-La validación estructural debe implementarse mediante *scripts* automatizados versionados dentro del repositorio.
+### 3.5 Validación Estructural y de Seguridad
+
+Asegura que la base del repositorio no sea degradada:
+
+- **TruffleHog (`secret-scanning.yml`)**: Impide la persistencia de secretos.
+- **Validación Estructural**: (Pendiente de *script custom*) Garantiza la presencia de artefactos normativos y archivos obligatorios.
 
 La eliminación de artefactos normativos constituye una falla crítica.
 
-### 3.5 Dependencias
+### 3.6 Dependencias
 
 Se deben validar:
 
@@ -111,7 +114,7 @@ Se deben validar:
 - Compatibilidad con gobernanza.
 - No introducción de cambios incompatibles sin declaración explícita.
 
-## 4. Flujo de Ejecución
+## 4. Flujo de Ejecución (PR vs *Main*)
 
 ### 4.1 En *Pull Request*
 
@@ -132,7 +135,19 @@ Debe ejecutarse:
 - Generación de PR de *release*.
 - Publicación de etiqueta tras aprobación.
 
-## 5. Permisos y Seguridad
+## 5. Matriz de Trazabilidad Técnica
+
+Esta tabla vincula los principios de gobernanza con los archivos de ejecución reales:
+
+| Componente                 | Archivo Workflow      | Nivel de Control       |
+| :------------------------- | :-------------------- | :--------------------- |
+| **Conventional Commits**   | `linting.yml`         | Bloqueante (CI)        |
+| **Linting (MD/YAML/JSON)** | `linting.yml`         | Informativo/Bloqueante |
+| **Shell Analysis**         | `shellcheck.yml`      | Bloqueante (CI)        |
+| **Secret Scanning**        | `secret-scanning.yml` | Crítico (SARIF)        |
+| **Versionamiento**         | `release-please.yml`  | Automatizado (Main)    |
+
+## 6. Permisos y Seguridad
 
 Los *workflows* deben:
 
@@ -145,7 +160,7 @@ Los *workflows* deben:
 
 La arquitectura CI forma parte del modelo de seguridad estructural.
 
-## 6. CI como Control de Gobernanza
+## 7. CI como Control de Gobernanza
 
 La CI no solo valida código.
 
@@ -160,7 +175,7 @@ Si una regla no está automatizada, no está completamente protegida.
 
 ---
 
-## 7. Evolución de la Arquitectura
+## 8. Evolución de la Arquitectura
 
 Cambios en la arquitectura CI que:
 
@@ -171,7 +186,7 @@ Cambios en la arquitectura CI que:
 
 Deben declararse como `BREAKING CHANGE` cuando afecten el contrato estructural.
 
-## 8. Repositorios Derivados
+## 9. Repositorios Derivados
 
 Los repositorios creados a partir de este *baseline* deben:
 
@@ -182,7 +197,7 @@ Los repositorios creados a partir de este *baseline* deben:
 
 La CI es parte integral del *baseline*.
 
-## 9. Declaración Final
+## 10. Declaración Final
 
 La arquitectura de integración continua es el mecanismo técnico que ejecuta la gobernanza.
 

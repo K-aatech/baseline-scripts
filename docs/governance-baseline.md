@@ -30,7 +30,10 @@ Todos los repositorios derivados deben cumplir estas reglas salvo desviación do
 El repositorio debe contener como mínimo:
 
 - `.editorconfig`
+- Configuración operativa de `shellcheck`
+- Configuración operativa de `trufflehog`
 - Configuración operativa de `commitlint`
+- configuración operativa de `dependabot`
 - Configuración operativa de `release-please`
 - Política de versionado (`docs/versioning.md`)
 - Guía de estilo (`docs/bash-style-guide.md`)
@@ -94,22 +97,17 @@ Los contenidos de `test/` no forman parte del artefacto distribuible del baselin
 
 La modificación de la topología de primer nivel definida en esta sección constituye una ruptura del contrato estructural y requiere declaración explícita de `BREAKING CHANGE` conforme a SemVer.
 
-### 2.2 Automatización Local (No Contractual)
+### 2.2 Automatización Local (Escudo Preventivo)
 
-El repositorio puede incluir un directorio `.githooks/` destinado a validaciones locales alineadas con las políticas de CI/CD.
+El repositorio implementa el *framework* `pre-commit` para garantizar el cumplimiento de estándares antes de la persistencia de datos en el historial.
 
 Su propósito es:
 
-- Reducir retroalimentación tardía
-- Detectar incumplimientos antes de abrir un *Pull Request*
-- Alinear comportamiento local con validaciones automatizadas
+- **Prevención de Fugas**: Bloqueo obligatorio de secretos mediante *TruffleHog*.
+- **Calidad de Origen**: Validación de sintaxis (*ShellCheck*) y formato (*Linters*) en tiempo real.
+- **Reducción de Ruido en CI**: Asegurar que los *Pull Requests* lleguen en estado de cumplimiento.
 
-El uso de *hooks* locales es recomendado, pero no obligatorio.
-
-La ausencia, modificación o eliminación del directorio `.githooks/` no constituye ruptura del contrato estructural del *baseline*.
-
-Las validaciones críticas deben ejecutarse obligatoriamente en CI.
-Los *hooks* locales no sustituyen controles centralizados.
+**El uso de los *hooks* locales definidos es obligatorio para todos los colaboradores.** La evasión de estos controles (vía `--no-verify`) sin justificación técnica se considera una violación de la gobernanza.
 
 ### 2.3 Configuración de Entorno (Recomendada)
 
@@ -127,6 +125,8 @@ Estas configuraciones tienen como objetivo:
 Dichos archivos son opcionales y no forman parte de la estructura mínima obligatoria.
 
 Su modificación o eliminación no constituye un cambio incompatible ni requiere incremento MAJOR.
+
+El procedimiento de configuración de estas herramientas está centralizado en el [Setup Checklist](./setup-checklist.md), el cual debe seguirse estrictamente para garantizar la paridad entre el entorno local y la CI.
 
 ## 3. Modelo de Desarrollo
 
@@ -158,6 +158,8 @@ Cuando CI esté habilitado, debe:
 - Validar estructura mínima
 - Ejecutar análisis estático
 - Publicar resultados de seguridad (cuando aplique)
+
+La implementación técnica de estas validaciones, así como la matriz de herramientas utilizadas, se detalla en el documento de [Arquitectura de Integración Continua (CI)](./ci-architecture.md).
 
 ## 5. Control de Calidad
 
