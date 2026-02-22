@@ -26,6 +26,7 @@ readonly REQUIRED_FILES=(
     "commitlint.config.cjs"
     "release-please-config.json"
     ".release-please-manifest.json"
+    ".markdownlintignore"
     ".editorconfig"
     "docs/governance-baseline.md"
     "docs/versioning.md"

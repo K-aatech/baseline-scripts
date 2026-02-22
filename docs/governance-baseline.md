@@ -109,6 +109,8 @@ Su propósito es:
 
 **El uso de los *hooks* locales definidos es obligatorio para todos los colaboradores.** La evasión de estos controles (vía `--no-verify`) sin justificación técnica se considera una violación de la gobernanza.
 
+Se permite la exclusión de archivos generados automáticamente (ej. `CHANGELOG.md`) de las reglas de formato de *Markdown* para garantizar la compatibilidad con los sistemas de versionado automático.
+
 ### 2.3 Configuración de Entorno (Recomendada)
 
 El repositorio puede incluir configuraciones específicas de herramientas de desarrollo, tales como:
