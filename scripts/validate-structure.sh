@@ -11,8 +11,26 @@
 set -euo pipefail
 
 # --- Configuration (Constants) ---
-readonly REQUIRED_DIRS=("audit" "hardening" "maintenance" "scripts" "test" "lib" "docs")
-readonly REQUIRED_FILES=(".editorconfig" "docs/governance-baseline.md" "docs/versioning.md" "docs/setup-checklist.md")
+readonly REQUIRED_DIRS=(
+    ".github"
+    "audit"
+    "hardening"
+    "maintenance"
+    "scripts"
+    "test"
+    "lib"
+    "docs"
+)
+readonly REQUIRED_FILES=(
+    ".pre-commit-config.yaml"
+    "commitlint.config.cjs"
+    "release-please-config.json"
+    ".release-please-manifest.json"
+    ".editorconfig"
+    "docs/governance-baseline.md"
+    "docs/versioning.md"
+    "docs/setup-checklist.md"
+)
 
 # --- Functions ---
 
