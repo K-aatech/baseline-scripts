@@ -85,11 +85,17 @@ Además de los artefactos mínimos obligatorios, el repositorio adopta la siguie
 - `.github/workflows/`
     Contiene exclusivamente automatizaciones CI/CD.
 
-#### Reglas de ejecutabilidad
+#### Reglas de Ejecutabilidad y Permisos
 
-- Los archivos en `scripts/` deben ser ejecutables.
-- Los archivos en `test/unit/` deben ser ejecutables.
-- Ningún archivo dentro de `lib/` o `test/lib/` debe tener permiso de ejecución.
+El repositorio implementa una auditoría estricta de permisos para garantizar la operatividad y la seguridad:
+
+1. **Scripts Operativos**: Los archivos en `scripts/`, `audit/`, `hardening/`, `maintenance/` y `test/unit/` deben ser ejecutables (`chmod +x`). Esto garantiza que las herramientas sean funcionales tras el despliegue.
+2. **Bibliotecas y Documentos**: Los archivos en `lib/`, `test/lib/` y `docs/` tienen prohibido el *bit* de ejecución. Esto asegura que los módulos solo se carguen mediante `source`, mitigando vectores de ejecución accidental.
+
+> [!NOTE]
+> El sistema de *pre-commit* intentará auto-remediar estos permisos localmente, pero la CI rechazará cualquier *commit* que no cumpla con este estándar.
+
+---
 
 La introducción de nuevas carpetas de primer nivel debe justificarse técnicamente.
 
