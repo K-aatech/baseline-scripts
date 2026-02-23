@@ -32,8 +32,10 @@ brew install shellcheck trufflehog
 
 # Linux (Ubuntu/Debian)
 sudo apt install shellcheck
-# TruffleHog en Linux: vía script oficial o descarga de binario
 ```
+
+> [!TIP]
+> TruffleHog en Linux: vía [script oficial](https://github.com/trufflesecurity/trufflehog) o descarga de binario
 
 ## 2. Inicialización del Repositorio
 
