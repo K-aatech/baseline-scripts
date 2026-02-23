@@ -19,7 +19,8 @@ readonly REQUIRED_DIRS=(
     "hardening"
     "maintenance"
     "scripts"
-    "test"
+    "test/lib"
+    "test/unit"
     "lib"
     "docs"
 )
