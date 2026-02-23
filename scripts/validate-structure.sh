@@ -43,28 +43,34 @@ readonly REQUIRED_FILES=(
 # Validate required binaries
 require_command() {
     local cmd="$1"
-    command -v "$cmd" >/dev/null 2>&1 || {
+    command -v "$cmd" > /dev/null 2>&1 || {
         echo -e "[\033[0;31mERROR\033[0m] Missing required command: $cmd" >&2
         exit 1
     }
 }
 
 # --- UI / UX Colors (ANSI 256-bit) ---
-log_info()    { echo -e "[\033[38;5;31mINFO\033[0m] $*"; }     # #1585B5 (K'aatech Accessible Blue)
-log_warn()    { echo -e "[\033[38;5;214mWARN\033[0m] $*"; }     # #FBCA04 (Amber)
-log_error()   { echo -e "[\033[38;5;124mERROR\033[0m] $*" >&2; } # #991B1B (Red)
-log_success() { echo -e "[\033[38;5;71mSUCCESS\033[0m] $*"; }   # #4CAF50 (Green)
+log_info() { echo -e "[\033[38;5;31mINFO\033[0m] $*"; }        # #1585B5 (K'aatech Accessible Blue)
+log_warn() { echo -e "[\033[38;5;214mWARN\033[0m] $*"; }       # #FBCA04 (Amber)
+log_error() { echo -e "[\033[38;5;124mERROR\033[0m] $*" >&2; } # #991B1B (Red)
+log_success() { echo -e "[\033[38;5;71mSUCCESS\033[0m] $*"; }  # #4CAF50 (Green)
 
 validate_existence() {
     local exit_code=0
     log_info "Verifying mandatory directories and normative files..."
 
     for dir in "${REQUIRED_DIRS[@]}"; do
-        [[ -d "$dir" ]] || { log_error "Mandatory directory missing: $dir"; exit_code=1; }
+        [[ -d "$dir" ]] || {
+            log_error "Mandatory directory missing: $dir"
+            exit_code=1
+        }
     done
 
     for file in "${REQUIRED_FILES[@]}"; do
-        [[ -f "$file" ]] || { log_error "Normative file missing: $file"; exit_code=1; }
+        [[ -f "$file" ]] || {
+            log_error "Normative file missing: $file"
+            exit_code=1
+        }
     done
     return "$exit_code"
 }
@@ -100,6 +106,7 @@ validate_executability() {
 }
 
 # --- Signal Handling ---
+# shellcheck disable=SC2329 # Explicitly disabled: invoked indirectly by 'trap'
 cleanup() {
     local exit_code=$?
     if [[ "$exit_code" -ne 0 ]]; then
