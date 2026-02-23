@@ -77,7 +77,7 @@ validate_executability() {
     # We look for files that are NOT executable, ignoring .gitkeep
     local non_execs
 
-    if find scripts/ test/unit/ audit/ hardening/ maintenance/ -name ".gitkeep" | grep -q .; then
+    if [[ -n "$(find scripts/ test/unit/ audit/ hardening/ maintenance/ -name ".gitkeep" -print -quit)" ]]; then
         log_warn "Found .gitkeep files in script zones. These are ignored for execution bit audit."
     fi
 
@@ -99,8 +99,19 @@ validate_executability() {
     return "$exit_code"
 }
 
-# --- Main Logic ---
+# --- Signal Handling ---
+cleanup() {
+    local exit_code=$?
+    if [[ "$exit_code" -ne 0 ]]; then
+        log_error "Script interrupted or failed unexpectedly."
+    fi
+    exit "$exit_code"
+}
 
+# Trap signals: SIGINT (Ctrl+C), SIGTERM (Kill), ERR (Unexpected error)
+trap cleanup SIGINT SIGTERM ERR
+
+# --- Main Logic ---
 main() {
     log_info "Initiating a structural governance and permissions audit..."
 
@@ -113,7 +124,7 @@ main() {
     validate_executability || final_status=1
 
     if [[ "$final_status" -eq 0 ]]; then
-        log_success "✅ Validation successful: The repository complies with the governance contract.."
+        log_success "✅ Validation successful: The repository complies with the governance contract."
     else
         log_error "❌ Validation failed: Structural or security inconsistencies were found."
         log_error "Please review the errors listed above and correct any missing permissions or files."
