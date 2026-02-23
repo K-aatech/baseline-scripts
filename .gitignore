@@ -1,0 +1,26 @@
+# --- System Files ---
+.DS_Store
+Thumbs.db
+.directory
+
+# --- Development & IDEs ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+*.log
+.history/
+
+# --- Local Environment & Secrets ---
+.env
+.env.local
+.env.*.local
+# Ignoramos cualquier archivo con credenciales que el usuario cree por error
+credentials.json
+*.pem
+*.key
+
+# --- Testing & Results ---
+test/results/
+coverage/
+.shellcheckrc
