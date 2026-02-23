@@ -29,7 +29,7 @@ Cualquier excepción a esta regla debe estar documentada explícitamente en el e
 
 ## 2. Estándares de Formato
 
-- **Indentación:** 4 espacios (definido en `.editorconfig`)
+- **Indentación:** 2 espacios (definido en `.editorconfig`)
 - **Final de línea:** LF
 - **Espacios en blanco al final:** No permitidos
 - **Mezcla de tabs y espacios:** Prohibida
