@@ -48,13 +48,11 @@ require_command() {
     }
 }
 
-log_info() {
-    echo -e "[\033[0;32mINFO\033[0m] $*"
-}
-
-log_error() {
-    echo -e "[\033[0;31mERROR\033[0m] $*" >&2
-}
+# --- UI / UX Colors (ANSI 256-bit) ---
+log_info()    { echo -e "[\033[38;5;31mINFO\033[0m] $*"; }     # #1585B5 (K'aatech Accessible Blue)
+log_warn()    { echo -e "[\033[38;5;214mWARN\033[0m] $*"; }     # #FBCA04 (Amber)
+log_error()   { echo -e "[\033[38;5;124mERROR\033[0m] $*" >&2; } # #991B1B (Red)
+log_success() { echo -e "[\033[38;5;71mSUCCESS\033[0m] $*"; }   # #4CAF50 (Green)
 
 validate_existence() {
     local exit_code=0
@@ -77,6 +75,11 @@ validate_executability() {
     # 1. Zone: Required Scripts (+x)
     # We look for files that are NOT executable, ignoring .gitkeep
     local non_execs
+
+    if find scripts/ test/unit/ audit/ hardening/ maintenance/ -name ".gitkeep" | grep -q .; then
+        log_warn "Found .gitkeep files in script zones. These are ignored for execution bit audit."
+    fi
+
     non_execs=$(find scripts/ test/unit/ audit/ hardening/ maintenance/ -type f ! -name ".gitkeep" ! -executable)
     if [[ -n "$non_execs" ]]; then
         log_error "The following files MUST be executable (+x):\n$non_execs"
@@ -109,7 +112,7 @@ main() {
     validate_executability || final_status=1
 
     if [[ "$final_status" -eq 0 ]]; then
-        log_info "✅ Validation successful: The repository complies with the governance contract.."
+        log_success "✅ Validation successful: The repository complies with the governance contract.."
     else
         log_error "❌ Validation failed: Structural or security inconsistencies were found."
         log_error "Please review the errors listed above and correct any missing permissions or files."
