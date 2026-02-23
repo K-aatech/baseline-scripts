@@ -167,6 +167,16 @@ Cada *script* debe incluir un bloque inicial que describa:
 - Dependencias
 - Códigos de salida
 
+### Documentación de Funciones
+
+Cada función debe estar precedida por un comentario que explique su contrato:
+
+- **Description**: Qué hace la función.
+- **Globals**: Lista de variables globales que lee o modifica (usar - `None` si no aplica).
+- **Arguments**: Parámetros que recibe.
+- **Outputs**: Qué imprime en `stdout` o `stderr`.
+- **Returns**: Significado del código de salida (0 para éxito, etc.).
+
 ## 11. *Linting* y Análisis Estático
 
 Todos los *scripts* deben:
@@ -205,3 +215,9 @@ Todo repositorio generado desde `baseline-scripts` debe:
 - Mantener compatibilidad con las políticas de CI y gobernanza
 
 Este documento se versiona junto con el repositorio baseline.
+
+## 15. Referencias y Autoridad Técnica
+
+Esta guía se basa en los principios de robustez de la **[Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)**.
+
+En caso de ambigüedad, escenarios no cubiertos por este documento o debates técnicos sobre el estilo, **prevalecerá el estándar definido por Google**. Se recomienda a los desarrolladores consultar dicha guía para profundizar en las razones detrás de estos estándares de seguridad y legibilidad.
