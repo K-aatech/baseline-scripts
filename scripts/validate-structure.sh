@@ -40,7 +40,9 @@ readonly REQUIRED_FILES=(
 
 # --- Functions ---
 
-# Validate required binaries
+# Description: Validates that a required command-line binary exists.
+# Arguments: $1 - Command name
+# Returns: 1 if not found, exits script.
 require_command() {
   local cmd="$1"
   command -v "$cmd" > /dev/null 2>&1 || {
@@ -55,6 +57,8 @@ log_warn() { echo -e "[\033[38;5;214mWARN\033[0m] $*"; }       # #FBCA04 (Amber)
 log_error() { echo -e "[\033[38;5;124mERROR\033[0m] $*" >&2; } # #991B1B (Red)
 log_success() { echo -e "[\033[38;5;71mSUCCESS\033[0m] $*"; }  # #4CAF50 (Green)
 
+# Description: Checks for the existence of mandatory directories and files.
+# Returns: 0 if all exist, 1 otherwise.
 validate_existence() {
   local exit_code=0
   log_info "Verifying mandatory directories and normative files..."
@@ -75,6 +79,8 @@ validate_existence() {
   return "$exit_code"
 }
 
+# Description: Audits files for correct execution bits (+x or -x).
+# Returns: 0 if compliant, 1 if violations are found.
 validate_executability() {
   local exit_code=0
   log_info "Auditing execution bits across protected zones..."
@@ -106,6 +112,7 @@ validate_executability() {
 }
 
 # --- Signal Handling ---
+# Description: Cleanup routine for signals and script termination.
 # shellcheck disable=SC2329 # Explicitly disabled: invoked indirectly by 'trap'
 cleanup() {
   local exit_code=$?
@@ -118,7 +125,7 @@ cleanup() {
 # Trap signals: SIGINT (Ctrl+C), SIGTERM (Kill), ERR (Unexpected error)
 trap cleanup SIGINT SIGTERM ERR
 
-# --- Main Logic ---
+# Description: Main entry point for the validation logic.
 main() {
   log_info "Initiating a structural governance and permissions audit..."
 
