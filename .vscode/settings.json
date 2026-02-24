@@ -35,7 +35,8 @@
     "release",
     "workflows",
     "structure",
-    "tooling"
+    "tooling",
+    "scripts"
   ],
   "markdown.validate.enabled": true
 }

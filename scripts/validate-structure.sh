@@ -96,6 +96,7 @@ validate_executability() {
   non_execs=$(find scripts/ test/unit/ audit/ hardening/ maintenance/ -type f ! -name ".gitkeep" ! -executable)
   if [[ -n "$non_execs" ]]; then
     log_error "The following files MUST be executable (+x):\n$non_execs"
+    log_info "Remediation: Run 'chmod +x <file_path>' to fix."
     exit_code=1
   fi
 
@@ -105,10 +106,19 @@ validate_executability() {
   illegal_execs=$(find lib/ test/lib/ docs/ -type f ! -name ".gitkeep" -executable)
   if [[ -n "$illegal_execs" ]]; then
     log_error "Security violation. The following files MUST NOT be executable:\n$illegal_execs"
+    log_info "Remediation: Run 'chmod -x <file_path>' to fix."
     exit_code=1
   fi
 
   return "$exit_code"
+}
+
+# Description: Checks for the presence of local .env files to prevent accidental leaks.
+validate_environment_safety() {
+  if [[ -f ".env" ]]; then
+    log_warn "Local '.env' file detected. Ensure it is ignored by Git to avoid secret leaks."
+    log_info "Check your .gitignore and run 'git rm --cached .env' if it was accidentally tracked."
+  fi
 }
 
 # --- Signal Handling ---
@@ -136,6 +146,7 @@ main() {
 
   validate_existence || final_status=1
   validate_executability || final_status=1
+  validate_environment_safety
 
   if [[ "$final_status" -eq 0 ]]; then
     log_success "✅ Validation successful: The repository complies with the governance contract."
