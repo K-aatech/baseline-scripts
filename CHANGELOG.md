@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/K-aatech/baseline-scripts/compare/v1.0.0...v1.1.0) (2026-02-24)
+
+
+### ✨ Features
+
+* 🛡️ strengthen governance baseline with permission auditing and environment safety ([#28](https://github.com/K-aatech/baseline-scripts/issues/28)) ([5c46e3c](https://github.com/K-aatech/baseline-scripts/commit/5c46e3cea022d8f0a48aa7069f983392db535e22))
+
 ## 1.0.0 (2026-02-22)
 
 
