@@ -37,6 +37,14 @@ sudo apt install shellcheck
 > [!TIP]
 > TruffleHog en Linux: vía [script oficial](https://github.com/trufflesecurity/trufflehog) o descarga de binario
 
+### 🔑 Credenciales de Automatización (*GitHub*)
+
+Para que el flujo de *Release Please* pueda crear *Pull Requests* de versión y etiquetas automáticamente, se requiere un **Personal Access Token (PAT)**.
+
+- **Nombre del Secret**: `RELEASE_PLEASE_PAT`
+- **Permisos mínimos**: `contents: write`, `pull-requests: write`.
+- **Configuración**: Debe cargarse en *Settings > Secrets and variables > Actions* del repositorio.
+
 ## 2. Inicialización del Repositorio
 
 Una vez instaladas las herramientas en su sistema, ejecute estos comandos:
@@ -73,6 +81,7 @@ Al abrir el proyecto en *VS Code*, se te sugerirá la instalación de las extens
 - [ ] **Git** configurado (`user.name` y `user.email`).
 - [ ] ***TruffleHog*** accesible en el PATH (`trufflehog --version`).
 - [ ] ***ShellCheck*** accesible en el PATH (`shellcheck --version`).
+- [ ] **PAT `RELEASE_PLEASE_PAT`** configurado en los *Secrets* de *GitHub*.
 - [ ] ***Hooks* de *pre-commit*** vinculados correctamente.
 - [ ] Extensiones recomendadas instaladas en *VS Code*.
 - [ ] Ejecutado `pre-commit run --all-files` sin errores.
