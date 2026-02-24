@@ -200,6 +200,14 @@ Cuando CI esté habilitado, debe:
 
 La implementación técnica de estas validaciones, así como la matriz de herramientas utilizadas, se detalla en el documento de [Arquitectura de Integración Continua (CI)](./ci-architecture.md).
 
+### 4.1 Requisitos de Identidad y Permisos (CI/CD)
+
+Para garantizar la autonomía del ciclo de vida (versionado y publicación), el motor de CI/CD requiere una identidad con permisos de escritura sobre el contenido y los metadatos del repositorio.
+
+- **RELEASE_PLEASE_PAT**: Es obligatorio configurar un *Personal Access Token* (PAT) bajo este nombre en los secretos del repositorio.
+- **Alcance**: Debe poseer permisos de `contents: write` y `pull-requests: write`.
+- **Propósito**: Permitir que el flujo de *Release Please* realice aperturas de PRs de versión, creación de etiquetas y generación de artefactos de forma automatizada sin bloqueos de protección de rama.
+
 ## 5. Control de Calidad
 
 Todos los *scripts* derivados deben:
