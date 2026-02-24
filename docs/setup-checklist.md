@@ -32,8 +32,10 @@ brew install shellcheck trufflehog
 
 # Linux (Ubuntu/Debian)
 sudo apt install shellcheck
-# TruffleHog en Linux: vía script oficial o descarga de binario
 ```
+
+> [!TIP]
+> TruffleHog en Linux: vía [script oficial](https://github.com/trufflesecurity/trufflehog) o descarga de binario
 
 ## 2. Inicialización del Repositorio
 
@@ -64,13 +66,6 @@ Descarga los entornos aislados de los *linters* y verifica el estado actual.
 ## 3. Configuración de Extensiones Recomendadas (*VS Code*)
 
 Al abrir el proyecto en *VS Code*, se te sugerirá la instalación de las extensiones recomendadas en `.vscode/extensions.json`. Esto habilitará el formateo automático y las alertas de *ShellCheck* en tiempo real mientras escribe.
-
-- `esbenp.prettier-vscode`
-- `EditorConfig.EditorConfig`
-- `foxundermoon.shellcheck`
-- `davidanson.vscode-markdownlint`
-- `redhat.vscode-yaml`
-- `vivaxy.vscode-conventional-commits`
 
 ## 4. Checklist de Verificación Final
 

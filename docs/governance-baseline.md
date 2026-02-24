@@ -85,11 +85,17 @@ Además de los artefactos mínimos obligatorios, el repositorio adopta la siguie
 - `.github/workflows/`
     Contiene exclusivamente automatizaciones CI/CD.
 
-#### Reglas de ejecutabilidad
+#### Reglas de Ejecutabilidad y Permisos
 
-- Los archivos en `scripts/` deben ser ejecutables.
-- Los archivos en `test/unit/` deben ser ejecutables.
-- Ningún archivo dentro de `lib/` o `test/lib/` debe tener permiso de ejecución.
+El repositorio implementa una auditoría estricta de permisos para garantizar la operatividad y la seguridad:
+
+1. **Scripts Operativos**: Los archivos en `scripts/`, `audit/`, `hardening/`, `maintenance/` y `test/unit/` deben ser ejecutables (`chmod +x`). Esto garantiza que las herramientas sean funcionales tras el despliegue.
+2. **Bibliotecas y Documentos**: Los archivos en `lib/`, `test/lib/` y `docs/` tienen prohibido el *bit* de ejecución. Esto asegura que los módulos solo se carguen mediante `source`, mitigando vectores de ejecución accidental.
+
+> [!NOTE]
+> El sistema de *pre-commit* intentará auto-remediar estos permisos localmente, pero la CI rechazará cualquier *commit* que no cumpla con este estándar.
+
+---
 
 La introducción de nuevas carpetas de primer nivel debe justificarse técnicamente.
 
@@ -110,6 +116,37 @@ Su propósito es:
 **El uso de los *hooks* locales definidos es obligatorio para todos los colaboradores.** La evasión de estos controles (vía `--no-verify`) sin justificación técnica se considera una violación de la gobernanza.
 
 Se permite la exclusión de archivos generados automáticamente (ej. `CHANGELOG.md`) de las reglas de formato de *Markdown* para garantizar la compatibilidad con los sistemas de versionado automático.
+
+#### 2.2.1 Ejecución Manual del Validaciones
+
+Aunque la mayoría de los controles son automáticos, los desarrolladores pueden (y deben) ejecutar las validaciones manualmente durante el desarrollo:
+
+##### Validación de Estructura y Permisos
+
+```bash
+./scripts/validate-structure.sh
+```
+
+| Nivel   | Color | Significado                       | Acción Requerida                   |
+| ------- | ----- | --------------------------------- | ---------------------------------- |
+| INFO    | Azul  | Inicio de auditoría y progreso.   | Ninguna (Informativo).             |
+| WARN    | Ámbar | Alertas no críticas u omisiones.  | Revisar que sea intencional.       |
+| ERROR   | Rojo  | Violación de contrato o permisos. | **Obligatoria**. Corregir pronto.  |
+| SUCCESS | Verde | Cumplimiento total del contrato.  | Ninguna. Listo para el despliegue. |
+
+> [!NOTE]
+> Este *script* es invocado automáticamente por el sistema de Integración Continua (CI). Un fallo en este validador causará el rechazo inmediato del *Pull Request*.
+
+##### Validación Completa de *Hooks* (Estilo, *Lint* y Seguridad)
+
+Para ejecutar todos los controles de *pre-commit* (*ShellCheck*, *TruffleHog*, *MarkdownLint*, etc.) sobre todos los archivos sin necesidad de crear un *commit*:
+
+```bash
+pre-commit run --all-files
+```
+
+> [!TIP]
+> Si solo deseas probar un hook específico (por ejemplo, solo ShellCheck) en los archivos modificados, puedes usar: pre-commit run shellcheck
 
 ### 2.3 Configuración de Entorno (Recomendada)
 
