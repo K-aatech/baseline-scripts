@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1](https://github.com/K-aatech/baseline-scripts/compare/v1.1.0...v1.1.1) (2026-03-04)
+
+
+### 🧹 Maintenance
+
+* **deps:** bump github/codeql-action from 4.32.3 to 4.32.4 ([#32](https://github.com/K-aatech/baseline-scripts/issues/32)) ([0617062](https://github.com/K-aatech/baseline-scripts/commit/06170622a08d6cd17e1c37cf16e6759de6c71975))
+* **deps:** bump github/codeql-action from 4.32.4 to 4.32.5 ([#33](https://github.com/K-aatech/baseline-scripts/issues/33)) ([f5c182e](https://github.com/K-aatech/baseline-scripts/commit/f5c182ea4e27b2f76a6321d37820cbba31788cf7))
+* **deps:** bump tj-actions/changed-files from 47.0.4 to 47.0.5 ([#34](https://github.com/K-aatech/baseline-scripts/issues/34)) ([fe88203](https://github.com/K-aatech/baseline-scripts/commit/fe882038c01723490d4d2e9db1f4b7951b3cce33))
+* **docs:** 📝 document mandatory RELEASE_PLEASE_PAT in governance and checklist ([#30](https://github.com/K-aatech/baseline-scripts/issues/30)) ([c6b2bbc](https://github.com/K-aatech/baseline-scripts/commit/c6b2bbc5216a8c36cff0f9c7e7eda060e40f2e0c))
+
 ## [1.1.0](https://github.com/K-aatech/baseline-scripts/compare/v1.0.0...v1.1.0) (2026-02-24)
 
 
